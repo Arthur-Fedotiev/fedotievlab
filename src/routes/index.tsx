@@ -3,7 +3,7 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 
 export default component$(() => {
   return (
-    <div>
+    <div class="bg-cyan-500">
       <h1>
         I'm Arthur <span class="lightning">⚡️</span>
       </h1>
@@ -12,11 +12,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "Welcome to Qwik",
+  title: "Fetotiev Lab",
   meta: [
     {
       name: "description",
-      content: "Qwik site description",
+      content: "Fedotiev Lab description",
     },
   ],
 };

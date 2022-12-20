@@ -1,20 +1,23 @@
-import { component$, Slot } from '@builder.io/qwik';
-import Header from '../components/header/header';
+import { component$, Slot } from "@builder.io/qwik";
+import Navbar from "~/components/layout/navigation/Navbar";
 
 export default component$(() => {
   return (
     <>
-      <main>
-        <Header />
+      <main class="flex flex-col md:flex-row h-full bg-orange-200 min-h-max">
+        <section class="md:basis-2/5 bg-slate-400">
+          {/* sidebar gors here */}
+        </section>
+
         <section>
-          <Slot />
+          <Navbar />
+        </section>
+        <section class="w-full main-content bg-lime-200 ">
+          <article class="">
+            <Slot />
+          </article>
         </section>
       </main>
-      <footer>
-        <a href="https://www.builder.io/" target="_blank">
-          Made with ♡ by Builder.io
-        </a>
-      </footer>
     </>
   );
 });
