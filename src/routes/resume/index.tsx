@@ -2,7 +2,7 @@ import { Resource, component$ } from "@builder.io/qwik";
 import { RequestHandler, useEndpoint } from "@builder.io/qwik-city";
 import db from "~/shared/db";
 
-export const onGet: RequestHandler<any[]> = async () => {
+export const onGet: RequestHandler<Education[]> = async () => {
   const educationDocs = await db.collection("education").get();
   const educationEntries = educationDocs.docs.map((entry) => {
     const { from, to } = entry.data();
@@ -46,3 +46,5 @@ export default component$(() => {
     </div>
   );
 });
+
+export type Education = any;

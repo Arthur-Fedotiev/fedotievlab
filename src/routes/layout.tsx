@@ -4,8 +4,8 @@ import Sidebar from "~/components/layout/sidebar";
 
 export default component$(() => {
   return (
-    <>
-      <main class="flex flex-col md:flex-row h-full bg-orange-200 min-h-max">
+    <div class="p-3 h-full">
+      <main class="flex flex-col gap-2 md:flex-row h-full mt-16">
         <section class="md:basis-2/5 bg-slate-400">
           <Sidebar />
         </section>
@@ -19,6 +19,6 @@ export default component$(() => {
           </article>
         </section>
       </main>
-    </>
+    </div>
   );
 });
