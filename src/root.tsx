@@ -17,8 +17,11 @@ export default component$(() => {
         <meta charSet="utf-8" />
         <link rel="manifest" href="/manifest.json" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&amp;display=swap"
-          rel="stylesheet"
+          rel="preload"
+          href="/fonts/poppins.woff2"
+          as="font"
+          crossOrigin="anonymous"
+          type="font/woff2"
         ></link>
         <RouterHead />
       </head>
