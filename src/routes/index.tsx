@@ -3,7 +3,7 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 
 export default component$(() => {
   return (
-    <div class="bg-cyan-500">
+    <div>
       <h1>
         I'm Arthur <span class="lightning">⚡️</span>
       </h1>

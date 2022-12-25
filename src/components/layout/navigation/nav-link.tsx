@@ -1,11 +1,9 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 
-export default component$(({ href }: { href: string }) => {
+export const NavLink = component$(({ href }: { href: string }) => {
   const location = useLocation();
   const isActive = location.pathname.includes(href);
-
-  console.log(isActive);
 
   return (
     <a

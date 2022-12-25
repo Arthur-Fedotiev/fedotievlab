@@ -15,8 +15,6 @@ export const onGet: RequestHandler<Education[]> = async () => {
     };
   });
 
-  console.log(educationEntries);
-
   return educationEntries;
 };
 

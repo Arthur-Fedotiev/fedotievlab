@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 
-export default component$(() => (
+export const HamburgerIcon = component$(() => (
   <svg
     class="w-6 h-6"
     aria-hidden="true"
