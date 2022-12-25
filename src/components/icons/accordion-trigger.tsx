@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 
-export const AccordionTrigger = component$(
+export const AccordionTriggerIcon = component$(
   ({ width = 6, height = 6 }: { width?: number; height?: number } = {}) => (
     <svg
       data-accordion-icon

@@ -47,19 +47,19 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
     <Separator />
     <ul class="flex justify-center mt-4 gap-4">
       <li class="social-item">
-        <a href="#" class="social-link">
+        <a href="#">
           <MailIcon width={36} height={36} />
         </a>
       </li>
 
       <li class="social-item">
-        <a href="#" class="social-link">
+        <a href="#">
           <MailIcon width={36} height={36} />
         </a>
       </li>
 
       <li class="social-item">
-        <a href="#" class="social-link">
+        <a href="#">
           <MailIcon width={36} height={36} />
         </a>
       </li>
