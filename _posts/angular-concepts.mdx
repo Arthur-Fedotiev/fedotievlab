@@ -13,12 +13,26 @@ tags: ["angular", "web", "javascript", "typescript", "frontend"]
 
 Contents
 
-- [Modules](guide/architecture#modules)
+- [Modules](#modules)
 - [Components](guide/architecture#components)
 - [Templates, directives, and data binding](guide/architecture#templates-directives-and-data-binding)
 - [Services and dependency injection](guide/architecture#services-and-dependency-injection)
 - [Routing](guide/architecture#routing)
 - [What's next](guide/architecture#whats-next)
+
+```tsx
+const test = "test";
+
+interface Test {
+  myProp: string;
+}
+```
+
+![Components image](/images/components.webp)
+
+Hello `highligh`!
+
+> blockquote
 
 Angular is a platform and framework for building single-page client applications using HTML and TypeScript. Angular is written in TypeScript. It implements core and optional functionality as a set of TypeScript libraries that you import into your applications.
 
@@ -32,13 +46,13 @@ Modules, components and services are classes that use _decorators_. These decora
 - The metadata for a component class associates it with a _template_ that defines a view. A template combines ordinary HTML with Angular _directives_ and _binding markup_ that allow Angular to modify the HTML before rendering it for display.
 - The metadata for a service class provides the information Angular needs to make it available to components through _dependency injection (DI)_
 
-An application's components typically define many views, arranged hierarchically. Angular provides the `[Router](api/router/Router)` service to help you define navigation paths among views. The router provides sophisticated in-browser navigational capabilities.
+An application's components typically define many views, arranged hierarchically. Angular provides the [Router](api/router/Router) service to help you define navigation paths among views. The router provides sophisticated in-browser navigational capabilities.
 
-See the [Angular Glossary](guide/glossary) for basic definitions of important Angular terms and usage.
+> See the [Angular Glossary](guide/glossary) for basic definitions of important Angular terms and usage.
 
 For the sample application that this page describes, see the [live example](generated/live-examples/architecture/stackblitz.html "live example") / [download example](generated/zips/architecture/architecture.zip "Download example").
 
-## Modules[_link_](guide/architecture#modules "Link to this heading")
+## [Modules](#modules)
 
 Angular _NgModules_ differ from and complement JavaScript (ES2015) modules. An NgModule declares a compilation context for a set of components that is dedicated to an application domain, a workflow, or a closely related set of capabilities. An NgModule can associate its components with related code, such as services, to form functional units.
 
