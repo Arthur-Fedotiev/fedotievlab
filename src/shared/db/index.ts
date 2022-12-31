@@ -1,5 +1,8 @@
 import admin, { ServiceAccount } from "firebase-admin";
-import serviceAccount from "../../../serviceAccountKey.json";
+
+const serviceAccount = JSON.parse(
+  import.meta.env.VITE_FIREBASE_SERVICE_ACCOUNT_KEY
+);
 
 if (!admin.apps.length) {
   try {
