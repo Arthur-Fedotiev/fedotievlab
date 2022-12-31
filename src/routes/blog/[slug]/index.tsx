@@ -4,11 +4,11 @@ import {
   useEndpoint,
   DocumentHead,
 } from "@builder.io/qwik-city";
-import { BlogPostFeature } from "@fl/blog-post-feature";
 import { getParsedBlogPost, renderMarkdown } from "~/modules/blog/utils";
 import { component$ } from "@builder.io/qwik";
 import { getPostSlugs } from "~/modules/blog/domain/infrastructure/get-post-slugs";
 import { BlogPostModel } from "~/modules/blog/domain/application/models";
+import { BlogPostFeature } from "~/modules/blog/blog-post-feature";
 
 export default component$(() => {
   const articleResource = useEndpoint<BlogPostModel>();
