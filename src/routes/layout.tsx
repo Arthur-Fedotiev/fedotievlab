@@ -3,17 +3,15 @@ import { Navbar, Sidebar } from "~/components/layout";
 
 export default component$(() => {
   return (
-    <div class="p-3 h-full">
-      <main class="flex flex-col gap-2 md:flex-row h-full mt-16 md:max-w-5xl sm:px-10 md:px-14 lg:px-24 xl:px-32 2xl:px-40">
+    <div class="p-3 h-full bg-stone-800">
+      <main class="flex flex-col gap-2 md:flex-row md:justify-between h-full mt-16 sm:px-10 md:px-14 lg:px-24 xl:px-32 2xl:px-40 md:gap-12">
+        <Navbar />
         <aside class="w-full self-start p-4 border rounded-lg shadow-md border-gray-700 bg-gray-800 md:sticky md:top-20 md:flex-grow-0 md:flex-shrink-0 md:basis-72 xl:top-28">
           <Sidebar />
         </aside>
 
-        <section>
-          <Navbar />
-        </section>
-        <section class="w-full main-content">
-          <article class="">
+        <section class="w-full py-4 px-2 md:p-0">
+          <article class="flex justify-center w-full">
             <Slot />
           </article>
         </section>

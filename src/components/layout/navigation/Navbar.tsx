@@ -37,11 +37,11 @@ export const Navbar = component$(() => {
           </div>
           <div
             id="navbar-sticky"
-            class={`items-center justify-between w-full md:flex md:w-auto md:order-1 overflow-hidden transition-max-h duration-700 ${
+            class={`items-center justify-between w-full md:flex md:w-auto md:order-1 overflow-hidden transition-max-h duration-700 md:max-h-8 ${
               state.expanded ? "max-h-96" : "max-h-0"
             }`}
           >
-            <ul class="flex flex-col p-4 mt-4 border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-neutral-800 border-gray-700">
+            <ul class="flex flex-col p-4 mt-4 border rounded-lg  bg-neutral-800 border-gray-700 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent">
               <li>
                 <NavLink href={"/about"}>About</NavLink>
               </li>

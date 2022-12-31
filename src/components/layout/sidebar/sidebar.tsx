@@ -13,7 +13,7 @@ export const Sidebar = component$(() => {
       <div class="flex flex-row justify-between items-center md:flex-col md:max-w-xl  ">
         <img
           class="object-cover w-32 h-32 rounded-full rounded-t-lg  md:h-auto md:w-48"
-          src="/images/avatar.jpeg"
+          src="/images/avatar.webp"
           alt="Avatar of Artur Fedotiev"
         />
         <div class="flex flex-col justify-between p-4 leading-normal">

@@ -32,12 +32,12 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
       <li class="flex items-center gap-4 min-w-full">
         <ProfileDetailsItem label="Birthday">
           <MailIcon q:slot="icon" width={36} height={36} />
-          <time dateTime="1982-06-23">June 23, 1982</time>
+          <time dateTime="1994-05-17">May 17, 1994</time>
         </ProfileDetailsItem>
       </li>
 
       <li class="flex items-center gap-4 min-w-full">
-        <ProfileDetailsItem label="Birthday">
+        <ProfileDetailsItem label="Location">
           <MailIcon q:slot="icon" width={36} height={36} />
           <address>Wroclaw, Poland</address>
         </ProfileDetailsItem>
