@@ -1,57 +1,68 @@
 import {
-  DocumentHead,
   RequestHandler,
+  StaticGenerateHandler,
   useEndpoint,
+  DocumentHead,
 } from "@builder.io/qwik-city";
-import { component$, Resource } from "@builder.io/qwik";
-import { getParsedFileContentBySlug } from "~/components/blog/utils/getParsedFileContentBySlug";
-import { renderMarkdown } from "~/components/blog/utils/markdown";
+import { BlogPostFeature } from "@fl/blog-post-feature";
+import { getParsedBlogPost, renderMarkdown } from "~/modules/blog/utils";
+import { component$ } from "@builder.io/qwik";
+import { getPostSlugs } from "~/modules/blog/domain/infrastructure/get-post-slugs";
+import { BlogPostModel } from "~/modules/blog/domain/application/models";
 
-interface Article {
-  slug: string;
-  description: string;
-  content: string;
-}
+export default component$(() => {
+  const articleResource = useEndpoint<BlogPostModel>();
 
-export const onGet: RequestHandler<Article> = async ({ params: { slug } }) => {
-  const { content, data } = getParsedFileContentBySlug({ slug });
+  return <BlogPostFeature articleResource={articleResource} />;
+});
+
+export const onGet: RequestHandler<BlogPostModel> = async ({
+  params: { slug },
+}) => {
+  const { content, data } = getParsedBlogPost({ slug });
   const renderedHTML = await renderMarkdown(content);
 
   return {
-    slug: slug,
-    description: `Description for ${slug}`,
     content: renderedHTML,
     data,
   };
 };
 
-export default component$(() => {
-  const articleResource = useEndpoint<Article>();
-
-  return (
-    <>
-      <h1>Blog Post</h1>
-      Resource:
-      <Resource
-        value={articleResource}
-        onPending={() => <div>Loading...</div>}
-        onRejected={() => <div>Failed to load article</div>}
-        onResolved={(article) => {
-          return (
-            <article
-              dangerouslySetInnerHTML={article.content}
-              class="prose prose-h1:text-center prose-headings:text-yellow-500 prose-a:text-yellow-400"
-            />
-          );
-        }}
-      />
-    </>
-  );
-});
-
-export const head: DocumentHead<Article> = ({ data: { slug } }) => {
+export const head: DocumentHead<BlogPostModel> = ({
+  data: {
+    data: { title, description, shareImage, tags },
+  },
+}) => {
   return {
-    title: `Article - ` + slug,
-    description: `Description for ` + slug,
+    title,
+    description,
+    meta: [
+      {
+        name: "keywords",
+        content: tags?.join(", "),
+      },
+      {
+        name: "description",
+        content: description,
+      },
+      {
+        name: "og:title",
+        content: title,
+      },
+      {
+        name: "og:image",
+        content: shareImage,
+      },
+      {
+        name: "og:description",
+        content: description,
+      },
+    ],
+  };
+};
+
+export const onStaticGenerate: StaticGenerateHandler = async () => {
+  return {
+    params: await getPostSlugs(),
   };
 };

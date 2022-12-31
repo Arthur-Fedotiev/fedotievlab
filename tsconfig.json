@@ -18,7 +18,11 @@
     "noEmit": true,
     "types": ["node", "vite/client"],
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@fl/blog-ui": ["./src/modules/blog/ui/index.ts"],
+      "@fl/blog-utils": ["./src/modules/blog/utils/index.ts"],
+      "@fl/blog-data-access": ["./src/modules/blog/data-access/index.ts"],
+      "@fl/blog-post-feature": ["./src/modules/blog/blog-post-feature/index.ts"]
     }
   },
   "files": ["./.eslintrc.cjs"],
