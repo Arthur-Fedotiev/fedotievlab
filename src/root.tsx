@@ -23,6 +23,13 @@ export default component$(() => {
           crossOrigin="anonymous"
           type="font/woff2"
         ></link>
+        <link
+          rel="preload"
+          href="/fonts/titan-one.ttf"
+          as="font"
+          crossOrigin="anonymous"
+          type="font/ttf"
+        ></link>
         <RouterHead />
       </head>
       <body lang="en" class="text-white bg-zinc-900">
