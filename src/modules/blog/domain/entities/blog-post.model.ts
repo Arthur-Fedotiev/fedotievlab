@@ -8,7 +8,12 @@ export interface BlogPostData {
   readonly date: string;
   readonly description: string;
   readonly shareImage: string;
+  readonly image: string;
   readonly author: string;
   readonly slug: string;
   readonly tags?: string[];
+}
+
+export interface BlogPostPreview extends BlogPostData {
+  readonly readingTime: string;
 }

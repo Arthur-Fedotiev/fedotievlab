@@ -2,8 +2,7 @@ import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
 import { BlogPost } from "../entities/blog-post.model";
-
-const POSTS_PATH = join(process.cwd(), "_posts");
+import { POSTS_PATH } from "./constants";
 
 export const getParsedBlogPost = ({
   slug,
