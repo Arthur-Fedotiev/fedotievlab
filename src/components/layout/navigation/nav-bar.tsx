@@ -2,7 +2,7 @@ import { component$, useStore, $ } from "@builder.io/qwik";
 import { NavLink } from "./nav-link";
 import { HamburgerIcon } from "./hamburger-icon";
 
-export const Navbar = component$(() => {
+export const NavBar = component$(() => {
   const state = useStore({ expanded: false });
 
   const toggle = $(() => {
