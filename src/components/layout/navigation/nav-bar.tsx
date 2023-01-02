@@ -19,7 +19,7 @@ export const NavBar = component$(() => {
               class="h-6 mr-3 sm:h-9 hidden"
               alt="FEDOTIEV LAB Logo"
             />
-            <span class="self-center text-xl font-semibold whitespace-nowrap text-yellow-500">
+            <span class="self-center text-xl font-semibold whitespace-nowrap text-primary-500">
               FEDOTIEV LAB
             </span>
           </a>

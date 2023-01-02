@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-
+// @ts-ignore
+const colors = require("tailwindcss/colors");
 // @ts-ignore
 const disabledCss = {
   "code::before": false,
@@ -11,6 +12,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primary: colors.yellow,
+        secondary: colors.teal,
+        neutral: colors.gray,
         charcoal: {
           100: "#F5F5F5",
           200: "#EEEEEE",
