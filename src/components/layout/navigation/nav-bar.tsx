@@ -49,9 +49,6 @@ export const NavBar = component$(() => {
                 <NavLink href={"/resume"}>Resume</NavLink>
               </li>
               <li>
-                <NavLink href={"/portfolio"}>Portfolio</NavLink>
-              </li>
-              <li>
                 <NavLink href={"/blog"}>Blog</NavLink>
               </li>
               <NavLink href={"/contact"}>Contact</NavLink>

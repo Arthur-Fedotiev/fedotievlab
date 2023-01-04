@@ -1,6 +1,6 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
-import { Sidebar } from "~/components/layout";
+import { Footer, Sidebar } from "~/components/layout";
 import { NavBar } from "~/components/layout/navigation/nav-bar";
 
 export default component$(() => {
@@ -24,6 +24,7 @@ export default component$(() => {
           </article>
         </section>
       </main>
+      <Footer />
     </div>
   );
 });
