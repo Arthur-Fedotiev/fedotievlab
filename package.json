@@ -20,7 +20,8 @@
     "lint": "eslint \"src/**/*.ts*\"",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
-    "test.unit": "vitest components",
+    "test.unit": "vitest run src",
+    "test.unit.watch": "vitest src",
     "qwik": "qwik"
   },
   "devDependencies": {
