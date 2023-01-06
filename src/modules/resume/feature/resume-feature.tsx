@@ -2,9 +2,9 @@ import { component$ } from "@builder.io/qwik";
 import { ResumeModel } from "../domain/entities/resume.model";
 import { Bio } from "../ui/bio";
 import { Education } from "../ui/educations";
-import { Experience } from "../ui/expirience";
+import { Experience } from "../ui/expirience/experience";
 import { Hobbies } from "../ui/hobbies";
-import { Skills } from "../ui/skills";
+import { Skills } from "../ui/skills/skills";
 import { Summary } from "../ui/summary";
 
 interface ResumeFeatureProps {

@@ -115,13 +115,13 @@
           "name": "Nx-Monorepo"
         },
         {
-          "name": "Micro-frontends with Module Federation"
+          "name": "MFE"
         },
         {
-          "name": "Layered Architecture"
+          "name": "Clean Arch."
         },
         {
-          "name": "hexagonal architecture"
+          "name": "Hexagonal Arch."
         }
       ]
     },

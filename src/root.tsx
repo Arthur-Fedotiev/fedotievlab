@@ -7,9 +7,12 @@ import {
 import { RouterHead } from "./components/router-head/router-head";
 
 import globalStyles from "./global.css?inline";
+import appearanceStyles from "~/shared/animations/use-appearance.styles.css?inline";
+
+export const styles = globalStyles + appearanceStyles;
 
 export default component$(() => {
-  useStyles$(globalStyles);
+  useStyles$(styles);
 
   return (
     <QwikCityProvider>

@@ -1,7 +1,6 @@
 import { component$, useStore, $ } from "@builder.io/qwik";
 import { AccordionTriggerIcon } from "../../icons/accordion-trigger";
 import { ProfileDetails } from "./prodile-details-list";
-
 export const Sidebar = component$(() => {
   const store = useStore({ show: false });
   const toggle$ = $(() => {

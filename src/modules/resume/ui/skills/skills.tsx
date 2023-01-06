@@ -1,5 +1,13 @@
-import { component$, useSignal, useClientEffect$, $ } from "@builder.io/qwik";
-import { Progress } from "./progress";
+import {
+  component$,
+  useSignal,
+  useClientEffect$,
+  $,
+  useStylesScoped$,
+} from "@builder.io/qwik";
+import { Progress } from "../progress";
+import skillsStyles from "./skill.css?inline";
+import { useAppearanceAnimation } from "~/shared/animations/use-appearance.animation";
 
 interface SkillProps {
   readonly data: {
@@ -13,7 +21,10 @@ interface SkillProps {
 }
 
 export const Skills = component$(({ data }: SkillProps) => {
-  const refsStore = useSignal<Element[]>([]);
+  useStylesScoped$(skillsStyles);
+  const { addRef } = useAppearanceAnimation();
+
+  const progressBarRefs = useSignal<Element[]>([]);
 
   useClientEffect$(() => {
     const observer = new IntersectionObserver(
@@ -31,12 +42,12 @@ export const Skills = component$(({ data }: SkillProps) => {
       }
     );
 
-    refsStore.value.forEach((el) => {
+    progressBarRefs.value.forEach((el) => {
       observer.observe(el);
     });
 
     return () => {
-      refsStore.value.forEach((el) => {
+      progressBarRefs.value.forEach((el) => {
         observer.unobserve(el);
       });
 
@@ -58,11 +69,15 @@ export const Skills = component$(({ data }: SkillProps) => {
                 <Progress
                   label={subskill.name}
                   percent={subskill.percent}
-                  ref={$((el: Element) => refsStore.value.push(el))}
+                  ref={$((el: Element) => progressBarRefs.value.push(el))}
                 />
               ) : null}
               {skill.type === "tag" ? (
-                <span key={subskill.name} class="tag">
+                <span
+                  ref={addRef}
+                  key={subskill.name}
+                  class="tag animate-hidden-left"
+                >
                   {subskill.name}
                 </span>
               ) : null}
