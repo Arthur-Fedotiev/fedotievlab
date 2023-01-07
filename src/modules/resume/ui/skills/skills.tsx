@@ -20,6 +20,8 @@ interface SkillProps {
   }[];
 }
 
+export const isTag = ({ type }: { type: string }) => type === "tag";
+
 export const Skills = component$(({ data }: SkillProps) => {
   useStylesScoped$(skillsStyles);
   const { addRef } = useAppearanceAnimation();
@@ -64,7 +66,11 @@ export const Skills = component$(({ data }: SkillProps) => {
             {skill.title}
           </h2>
           {skill.subskills.map((subskill) => (
-            <span key={subskill.name}>
+            <span
+              class={`${isTag(skill) ? "staggered" : ""} animate-hidden-left`}
+              key={subskill.name}
+              ref={addRef}
+            >
               {subskill.percent ? (
                 <Progress
                   label={subskill.name}
@@ -72,12 +78,8 @@ export const Skills = component$(({ data }: SkillProps) => {
                   ref={$((el: Element) => progressBarRefs.value.push(el))}
                 />
               ) : null}
-              {skill.type === "tag" ? (
-                <span
-                  ref={addRef}
-                  key={subskill.name}
-                  class="tag animate-hidden-left"
-                >
+              {isTag(skill) ? (
+                <span key={subskill.name} class="tag ">
                   {subskill.name}
                 </span>
               ) : null}

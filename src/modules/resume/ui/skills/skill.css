@@ -5,22 +5,22 @@
   transition: all 1s;
 }
 
-.tag:nth-child(2) {
+.staggered:nth-child(2) {
   transition-delay: 200ms;
 }
 
-.tag:nth-child(3) {
+.staggered:nth-child(3) {
   transition-delay: 400ms;
 }
 
-.tag:nth-child(4) {
+.staggered:nth-child(4) {
   transition-delay: 600ms;
 }
 
-.tag:nth-child(5) {
+.staggered:nth-child(5) {
   transition-delay: 800ms;
 }
 
-.tag:nth-child(6) {
+.staggered:nth-child(6) {
   transition-delay: 1000ms;
 }
