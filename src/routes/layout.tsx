@@ -1,7 +1,7 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
-import { Footer, Sidebar } from "~/components/layout";
-import { NavBar } from "~/components/layout/navigation/nav-bar";
+import { Footer, Sidebar } from "~/modules/layout";
+import { NavBar } from "~/modules/layout/navigation/nav-bar";
 
 export default component$(() => {
   const location = useLocation();

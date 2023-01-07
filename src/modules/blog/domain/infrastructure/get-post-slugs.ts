@@ -1,4 +1,4 @@
-import db from "~/shared/db";
+import db from "~/modules/shared/domain/infrastructure";
 import { PostSlug } from "../entities/post-slug.model";
 
 const BLOG_POST_COLLECTION = "blog-posts";

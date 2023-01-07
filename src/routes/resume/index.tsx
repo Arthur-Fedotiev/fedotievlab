@@ -1,6 +1,6 @@
 import { component$, Resource } from "@builder.io/qwik";
 import { RequestHandler, useEndpoint } from "@builder.io/qwik-city";
-import { Loading } from "~/components/shared/loading";
+import { Loading } from "~/modules/shared/ui/loading";
 
 import { getResume } from "~/modules/resume/domain/application/get-resume";
 import { ResumeModel } from "~/modules/resume/domain/entities/resume.model";

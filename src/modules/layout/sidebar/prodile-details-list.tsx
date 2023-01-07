@@ -1,7 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import { ProfileDetailsItem } from "./profile-detail";
-import { Separator } from "../../shared/Separator";
-import { MailIcon } from "~/components/icons/mail-icon";
+import { Separator } from "../../shared/ui/separator";
+import { MailIcon } from "~/modules/shared/ui/icons/mail-icon";
 
 export const ProfileDetails = component$(({ show }: { show: boolean }) => (
   <div

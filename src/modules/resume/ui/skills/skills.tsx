@@ -7,7 +7,7 @@ import {
 } from "@builder.io/qwik";
 import { Progress } from "../progress";
 import skillsStyles from "./skill.css?inline";
-import { useAppearanceAnimation } from "~/shared/animations/use-appearance.animation";
+import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
 
 interface SkillProps {
   readonly data: {

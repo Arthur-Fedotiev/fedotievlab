@@ -1,6 +1,6 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import responsibilitiesStyles from "./responsibilities.styles.css?inline";
-import { useAppearanceAnimation } from "../../../../shared/animations/use-appearance.animation";
+import { useAppearanceAnimation } from "../../../shared/animations/use-appearance.animation";
 
 interface ResponsibilitiesProps {
   readonly data: string[];

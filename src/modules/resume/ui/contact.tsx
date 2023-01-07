@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { MailIcon } from "~/components/icons";
+import { MailIcon } from "~/modules/shared/ui/icons";
 
 interface ContactProps {
   readonly field: string;

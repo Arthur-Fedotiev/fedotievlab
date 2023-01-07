@@ -4,10 +4,10 @@ import {
   RouterOutlet,
   ServiceWorkerRegister,
 } from "@builder.io/qwik-city";
-import { RouterHead } from "./components/router-head/router-head";
+import { RouterHead } from "./modules/core/router-head/router-head";
 
 import globalStyles from "./global.css?inline";
-import appearanceStyles from "~/shared/animations/use-appearance.styles.css?inline";
+import appearanceStyles from "~/modules/shared/animations/use-appearance.styles.css?inline";
 
 export const styles = globalStyles + appearanceStyles;
 

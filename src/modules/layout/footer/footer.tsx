@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { MailIcon } from "../../icons/mail-icon";
+import { MailIcon } from "../../shared/ui/icons/mail-icon";
 
 export const social = [
   {

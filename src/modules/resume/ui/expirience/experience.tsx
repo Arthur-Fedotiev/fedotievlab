@@ -1,7 +1,7 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { Responsibilities } from "../responsibilities/responsibilities";
 import experienceStyles from "./experience.styles.css?inline";
-import { useAppearanceAnimation } from "~/shared/animations/use-appearance.animation";
+import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
 
 interface ExperienceProps {
   readonly data: {
