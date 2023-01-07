@@ -7,7 +7,7 @@ export default component$(() => {
   const location = useLocation();
   const isResume = location.pathname.includes("/resume");
   return (
-    <div class="p-3 h-full bg-stone-800">
+    <div class="p-3 h-full bg-stone-800 overflow-hidden">
       <main class="flex flex-col gap-2 md:flex-row md:justify-between min-h-screen mt-16 sm:px-10 md:gap-12">
         <NavBar />
         <aside
