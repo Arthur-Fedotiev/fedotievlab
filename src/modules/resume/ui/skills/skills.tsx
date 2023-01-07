@@ -25,7 +25,9 @@ export const isProgress = <
 
 export const updateElementWidth$ = $((entry: IntersectionObserverEntry) => {
   const el = entry.target as HTMLElement;
-  const percent = el.dataset.percent ?? 0;
+  const percent = el.dataset.percent;
+
+  if (!percent) return;
 
   el.style.width = entry.isIntersecting ? `${percent}%` : "0%";
 });
@@ -46,7 +48,7 @@ export const Skills = component$(({ data }: SkillProps) => {
           </h2>
           {skill.subskills.map((subskill) => (
             <span
-              class={`${isTag(skill) ? "staggered" : ""} animate-hidden-left`}
+              class={`${isTag(skill) ? "staggered animate-hidden-left" : ""}`}
               key={subskill.name}
               ref={addRef}
             >

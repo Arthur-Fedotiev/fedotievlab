@@ -3,11 +3,13 @@ import { PropFunction, component$ } from "@builder.io/qwik";
 interface ProgressProps {
   readonly label: string;
   readonly percent: number;
-  readonly ref$: PropFunction<(el: Element) => void | number>;
+  readonly ref$?: PropFunction<(el: Element) => void | number>;
 }
 
+export const noop = async () => void 0;
+
 export const Progress = component$(
-  ({ percent, label, ref$ }: ProgressProps) => (
+  ({ percent, label, ref$ = noop }: ProgressProps) => (
     <>
       <span class="pl-2 text-charcoal-200">{label}</span>
       <div class="shadow w-full bg-transparent rounded overflow-hidden mb-2">
