@@ -1,8 +1,9 @@
-import { component$, $, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { Progress } from "../progress";
 import skillsStyles from "./skill.css?inline";
 import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
-import { useInView } from "~/modules/shared/ui/use-in-view";
+import { useInView } from "~/modules/shared/ui/hooks/use-in-view";
+import { updateElementWidth$, isTag, isProgress } from "./utils";
 
 interface SkillProps {
   readonly data: {
@@ -14,23 +15,6 @@ interface SkillProps {
     }[];
   }[];
 }
-
-export const isTag = ({ type }: { type: string }) => type === "tag";
-export const isProgress = <
-  T extends Readonly<{ type?: string; percent?: number }>
->(
-  param: T
-): param is Required<T> =>
-  param.type === "progress" || typeof param.percent === "number";
-
-export const updateElementWidth$ = $((entry: IntersectionObserverEntry) => {
-  const el = entry.target as HTMLElement;
-  const percent = el.dataset.percent;
-
-  if (!percent) return;
-
-  el.style.width = entry.isIntersecting ? `${percent}%` : "0%";
-});
 
 export const Skills = component$(({ data }: SkillProps) => {
   useStylesScoped$(skillsStyles);

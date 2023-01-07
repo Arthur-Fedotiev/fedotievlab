@@ -1,4 +1,4 @@
-import { useInView } from "../ui/use-in-view";
+import { useInView } from "../ui/hooks/use-in-view";
 import { $ } from "@builder.io/qwik";
 
 export const SLIDE_IN_CLASS_NAME = "animate-slide-in";

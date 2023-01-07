@@ -1,11 +1,15 @@
 import { QRL, useClientEffect$, useSignal, $ } from "@builder.io/qwik";
 
 export type IntersectionHandler = (entry: IntersectionObserverEntry) => void;
+export interface UseInViewResult {
+  addRef: (el: Element) => number;
+  addRef$: QRL<(el: Element) => number>;
+}
 
 export const useInView = (
   handler: QRL<IntersectionHandler>,
   options?: IntersectionObserverInit
-) => {
+): UseInViewResult => {
   const refs = useSignal<Element[]>([]);
 
   useClientEffect$(() => {
@@ -14,17 +18,9 @@ export const useInView = (
       options
     );
 
-    refs.value.forEach((el) => {
-      observer.observe(el);
-    });
+    refs.value.forEach(observer.observe.bind(observer));
 
-    return () => {
-      refs.value.forEach((el) => {
-        observer.unobserve(el);
-      });
-
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   });
 
   return {
