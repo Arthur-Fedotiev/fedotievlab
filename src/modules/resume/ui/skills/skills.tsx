@@ -1,4 +1,4 @@
-import { component$, $, useStylesScoped$, Ref } from "@builder.io/qwik";
+import { component$, $, useStylesScoped$ } from "@builder.io/qwik";
 import { Progress } from "../progress";
 import skillsStyles from "./skill.css?inline";
 import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
@@ -17,7 +17,7 @@ interface SkillProps {
 
 export const isTag = ({ type }: { type: string }) => type === "tag";
 export const isProgress = <
-  T extends Readonly<{ type: string; percent?: number }>
+  T extends Readonly<{ type?: string; percent?: number }>
 >(
   param: T
 ): param is Required<T> => param.type === "progress";
