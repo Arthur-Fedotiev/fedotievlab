@@ -20,7 +20,8 @@ export const isProgress = <
   T extends Readonly<{ type?: string; percent?: number }>
 >(
   param: T
-): param is Required<T> => param.type === "progress";
+): param is Required<T> =>
+  param.type === "progress" || typeof param.percent === "number";
 
 export const updateElementWidth$ = $((entry: IntersectionObserverEntry) => {
   const el = entry.target as HTMLElement;
