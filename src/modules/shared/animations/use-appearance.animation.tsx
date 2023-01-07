@@ -11,9 +11,10 @@ export const handleIntersection = (classes: string[] = []) =>
   });
 
 export const useAppearanceAnimation = (classes?: string[]) => {
-  const { addRef } = useInView(handleIntersection(classes));
+  const { addRef, addRef$ } = useInView(handleIntersection(classes));
 
   return {
     addRef,
+    addRef$,
   };
 };

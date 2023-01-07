@@ -1,13 +1,8 @@
-import {
-  component$,
-  useSignal,
-  useClientEffect$,
-  $,
-  useStylesScoped$,
-} from "@builder.io/qwik";
+import { component$, $, useStylesScoped$, Ref } from "@builder.io/qwik";
 import { Progress } from "../progress";
 import skillsStyles from "./skill.css?inline";
 import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
+import { useInView } from "~/modules/shared/ui/use-in-view";
 
 interface SkillProps {
   readonly data: {
@@ -21,41 +16,24 @@ interface SkillProps {
 }
 
 export const isTag = ({ type }: { type: string }) => type === "tag";
+export const isProgress = <
+  T extends Readonly<{ type: string; percent?: number }>
+>(
+  param: T
+): param is Required<T> => param.type === "progress";
+
+export const updateElementWidth$ = $((entry: IntersectionObserverEntry) => {
+  const el = entry.target as HTMLElement;
+  const percent = el.dataset.percent ?? 0;
+
+  el.style.width = entry.isIntersecting ? `${percent}%` : "0%";
+});
 
 export const Skills = component$(({ data }: SkillProps) => {
   useStylesScoped$(skillsStyles);
+
   const { addRef } = useAppearanceAnimation();
-
-  const progressBarRefs = useSignal<Element[]>([]);
-
-  useClientEffect$(() => {
-    const observer = new IntersectionObserver(
-      (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const percent = entry.target.getAttribute("data-percent") ?? 0;
-            el.style.width = `${percent}%`;
-          } else {
-            const el = entry.target as HTMLElement;
-            el.style.width = "0%";
-          }
-        });
-      }
-    );
-
-    progressBarRefs.value.forEach((el) => {
-      observer.observe(el);
-    });
-
-    return () => {
-      progressBarRefs.value.forEach((el) => {
-        observer.unobserve(el);
-      });
-
-      observer.disconnect();
-    };
-  });
+  const { addRef$: addProgressBarRef$ } = useInView(updateElementWidth$);
 
   return (
     <section>
@@ -71,11 +49,11 @@ export const Skills = component$(({ data }: SkillProps) => {
               key={subskill.name}
               ref={addRef}
             >
-              {subskill.percent ? (
+              {isProgress(subskill) ? (
                 <Progress
                   label={subskill.name}
                   percent={subskill.percent}
-                  ref={$((el: Element) => progressBarRefs.value.push(el))}
+                  ref$={addProgressBarRef$}
                 />
               ) : null}
               {isTag(skill) ? (
