@@ -2,8 +2,8 @@ import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { Progress } from "../progress";
 import skillsStyles from "./skill.css?inline";
 import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
-import { useInView } from "~/modules/shared/ui/hooks/use-in-view";
-import { updateElementWidth$, isTag, isProgress } from "./utils";
+import { useInView$ } from "~/modules/shared/ui/hooks/use-in-view";
+import { updateElementWidth, isTag, isProgress } from "./utils";
 
 interface SkillProps {
   readonly data: {
@@ -20,7 +20,7 @@ export const Skills = component$(({ data }: SkillProps) => {
   useStylesScoped$(skillsStyles);
 
   const { addRef } = useAppearanceAnimation();
-  const { addRef$: addProgressBarRef$ } = useInView(updateElementWidth$);
+  const { addRef$: addProgressBarRef$ } = useInView$(updateElementWidth);
 
   return (
     <section>

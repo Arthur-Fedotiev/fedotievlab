@@ -1,4 +1,4 @@
-import { useInView } from "../ui/hooks/use-in-view";
+import { useInViewQrl } from "../ui/hooks/use-in-view";
 import { $ } from "@builder.io/qwik";
 
 export const SLIDE_IN_CLASS_NAME = "animate-slide-in";
@@ -11,7 +11,7 @@ export const handleIntersection = (classes: string[] = []) =>
   });
 
 export const useAppearanceAnimation = (classes?: string[]) => {
-  const { addRef, addRef$ } = useInView(handleIntersection(classes));
+  const { addRef, addRef$ } = useInViewQrl(handleIntersection(classes));
 
   return {
     addRef,
