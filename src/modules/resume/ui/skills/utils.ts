@@ -1,3 +1,5 @@
+import { SkillProps } from "./models";
+
 export const isTag = ({ type }: { type: string }) => type === "tag";
 export const isProgress = <
   T extends Readonly<{ type?: string; percent?: number }>
@@ -14,3 +16,14 @@ export const updateElementWidth = (entry: IntersectionObserverEntry) => {
 
   el.style.width = entry.isIntersecting ? `${percent}%` : "0%";
 };
+
+const getIndexOf =
+  (type: "tag" | "percent") =>
+  (data: SkillProps["data"], skillIdx: number, subSkillIdx: number) =>
+    data
+      .slice(0, skillIdx)
+      .filter((skill) => skill.type === type)
+      .reduce((acc, { subskills }) => acc + subskills.length, 0) + subSkillIdx;
+
+export const getIndexOfTag = getIndexOf("tag");
+export const getIndexOfProgress = getIndexOf("percent");

@@ -1,4 +1,4 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useStylesScoped$, $ } from "@builder.io/qwik";
 import { Responsibilities } from "../responsibilities/responsibilities";
 import experienceStyles from "./experience.styles.css?inline";
 import { useAppearanceAnimation } from "~/modules/shared/animations/use-appearance.animation";
@@ -17,7 +17,9 @@ interface ExperienceProps {
 export const Experience = component$(({ data }: ExperienceProps) => {
   useStylesScoped$(experienceStyles);
 
-  const { addRef } = useAppearanceAnimation();
+  const refsStore = useAppearanceAnimation();
+
+  const addRef$ = $((el: Element) => refsStore.refs.push(el));
 
   return (
     <section>
@@ -25,10 +27,10 @@ export const Experience = component$(({ data }: ExperienceProps) => {
       {data &&
         data.map((item, i) => (
           <article class="my-5" key={`${item.company}-${i}`}>
-            <h2 ref={addRef} class="item-header animate-hidden-left">
+            <h2 ref={addRef$} class="item-header animate-hidden-left">
               {item.role}
             </h2>
-            <h3 ref={addRef} class="item-sub animate-hidden-right">
+            <h3 ref={addRef$} class="item-sub animate-hidden-right">
               {item.company} | {item.start} - {item.end || "PRESENT"}
             </h3>
             {item.secondaryResponsibilities ? <h4>Main:</h4> : null}

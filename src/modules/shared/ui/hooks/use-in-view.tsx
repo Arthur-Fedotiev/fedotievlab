@@ -1,38 +1,35 @@
 import {
   QRL,
   useClientEffect$,
-  useSignal,
-  $,
   implicit$FirstArg,
+  useStore,
 } from "@builder.io/qwik";
-
 export type IntersectionHandler = (entry: IntersectionObserverEntry) => void;
-export interface UseInViewResult {
-  addRef: (el: Element) => number;
-  addRef$: QRL<(el: Element) => number>;
-}
 
 export const useInViewQrl = (
   handler$: QRL<IntersectionHandler>,
   options?: IntersectionObserverInit
-): UseInViewResult => {
-  const refs = useSignal<Element[]>([]);
+) => {
+  const refsStore: { refs: (Element | null)[] } = useStore(() => ({
+    refs: [],
+  }));
 
-  useClientEffect$(() => {
+  useClientEffect$(({ track }) => {
+    track(() => refsStore.refs);
+
     const observer = new IntersectionObserver(
       (entries: IntersectionObserverEntry[]) => entries.forEach(handler$),
       options
     );
 
-    refs.value.forEach((el) => observer.observe(el));
+    refsStore.refs.forEach((el) => el && observer.observe(el));
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   });
 
-  return {
-    addRef: (el: Element) => refs.value.push(el),
-    addRef$: $((el: Element) => refs.value.push(el)),
-  };
+  return refsStore;
 };
 
 export const useInView$ = implicit$FirstArg(useInViewQrl);

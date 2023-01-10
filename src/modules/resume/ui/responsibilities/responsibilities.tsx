@@ -1,4 +1,4 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useStylesScoped$, $ } from "@builder.io/qwik";
 import responsibilitiesStyles from "./responsibilities.styles.css?inline";
 import { useAppearanceAnimation } from "../../../shared/animations/use-appearance.animation";
 
@@ -9,13 +9,16 @@ interface ResponsibilitiesProps {
 export const Responsibilities = component$(
   ({ data }: ResponsibilitiesProps) => {
     useStylesScoped$(responsibilitiesStyles);
-    const { addRef } = useAppearanceAnimation();
+
+    const refsStore = useAppearanceAnimation();
+    const addRef = (idx: number) =>
+      $((el: Element) => refsStore.refs.splice(idx, 1, el));
 
     return (
       <ul class="list-disc list-outside">
-        {data.map((item) => (
+        {data.map((item, i) => (
           <li
-            ref={addRef}
+            ref={addRef(i)}
             class="ml-4 mt-2 animate-hidden-bottom"
             key={item}
             dangerouslySetInnerHTML={item}
