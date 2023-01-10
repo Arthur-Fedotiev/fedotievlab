@@ -17,6 +17,7 @@ import { $ } from "@builder.io/qwik";
 import { SkillProps } from "./models";
 import { useInView$ } from "~/modules/shared/ui/hooks/use-in-view";
 import { toggleClasses } from "~/modules/shared/animations/utils";
+import { ResumeSkillType } from "../../domain/entities/resume.model";
 
 export const Skills = component$(({ data }: SkillProps) => {
   useStylesScoped$(skillsStyles);
@@ -41,13 +42,13 @@ export const Skills = component$(({ data }: SkillProps) => {
   });
 
   useTask$(() => {
-    const tagsLength = data
-      .filter((skill) => skill.type === "tag")
-      .reduce((acc, { subskills }) => acc + subskills.length, 0);
+    const countOf = (type: ResumeSkillType) =>
+      data
+        .filter((skill) => skill.type === type)
+        .reduce((acc, { subskills }) => acc + subskills.length, 0);
 
-    const progressLength = data
-      .filter((skill) => skill.type === "percent")
-      .reduce((acc, { subskills }) => acc + subskills.length, 0);
+    const tagsLength = countOf(ResumeSkillType.Tag);
+    const progressLength = countOf(ResumeSkillType.Percent);
 
     skillsStore.data = data;
     tagRefs.refs = new Array(tagsLength).fill(null);
