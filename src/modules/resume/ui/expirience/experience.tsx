@@ -17,9 +17,13 @@ interface ExperienceProps {
 export const Experience = component$(({ data }: ExperienceProps) => {
   useStylesScoped$(experienceStyles);
 
-  const refsStore = useAppearanceAnimation();
+  const headersRefsStore = useAppearanceAnimation();
+  const subHeadersRefsStore = useAppearanceAnimation();
 
-  const addRef$ = $((el: Element) => refsStore.refs.push(el));
+  const addRef = (
+    idx: number,
+    store: ReturnType<typeof useAppearanceAnimation>
+  ) => $((el: Element) => store.refs.splice(idx, 1, el));
 
   return (
     <section>
@@ -27,10 +31,16 @@ export const Experience = component$(({ data }: ExperienceProps) => {
       {data &&
         data.map((item, i) => (
           <article class="my-5" key={`${item.company}-${i}`}>
-            <h2 ref={addRef$} class="item-header animate-hidden-left">
+            <h2
+              ref={addRef(i, headersRefsStore)}
+              class="item-header animate-hidden-left"
+            >
               {item.role}
             </h2>
-            <h3 ref={addRef$} class="item-sub animate-hidden-right">
+            <h3
+              ref={addRef(i, subHeadersRefsStore)}
+              class="item-sub animate-hidden-right"
+            >
               {item.company} | {item.start} - {item.end || "PRESENT"}
             </h3>
             {item.secondaryResponsibilities ? <h4>Main:</h4> : null}
