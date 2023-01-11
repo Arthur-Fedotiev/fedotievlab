@@ -43,10 +43,7 @@ export const NavBar = component$(() => {
           >
             <ul class="flex flex-col p-4 mt-4 border rounded-lg  bg-neutral-800 border-gray-700 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-transparent">
               <li>
-                <NavLink href={"/about"}>About</NavLink>
-              </li>
-              <li>
-                <NavLink href={"/resume"}>Resume</NavLink>
+                <NavLink href={"/resume"}>About</NavLink>
               </li>
               <li>
                 <NavLink href={"/blog"}>Blog</NavLink>
