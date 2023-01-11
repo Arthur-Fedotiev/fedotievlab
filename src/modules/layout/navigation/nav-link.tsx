@@ -1,9 +1,13 @@
 import { component$, Slot } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 
+export const isIndex = (href: string, pathname: string): boolean =>
+  !!(href === "/#" && pathname === "/");
+
 export const NavLink = component$(({ href }: { href: string }) => {
   const location = useLocation();
-  const isActive = location.pathname.includes(href);
+  const isActive =
+    location.pathname.includes(href) || isIndex(href, location.pathname);
 
   return (
     <a

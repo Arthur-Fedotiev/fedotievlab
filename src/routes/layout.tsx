@@ -5,14 +5,14 @@ import { NavBar } from "~/modules/layout/navigation/nav-bar";
 
 export default component$(() => {
   const location = useLocation();
-  const isResume = location.pathname.includes("/resume");
+  const isContact = location.pathname.includes("/contact");
   return (
     <div class="p-3 h-full bg-stone-800 overflow-hidden">
       <main class="flex flex-col gap-2 md:flex-row md:justify-between min-h-screen mt-16 sm:px-10 md:gap-12">
         <NavBar />
         <aside
           class={`
-           ${isResume ? "hidden" : " "}
+           ${isContact ? "" : "hidden"}
           w-full self-start p-2 border rounded-lg shadow-md border-gray-700 bg-gray-800 md:sticky md:top-28 md:flex-grow-0 md:flex-shrink-0 md:basis-72`}
         >
           <Sidebar />
