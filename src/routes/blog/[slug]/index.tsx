@@ -1,24 +1,20 @@
 import {
-  RequestHandler,
   StaticGenerateHandler,
-  useEndpoint,
+  loader$,
   DocumentHead,
 } from "@builder.io/qwik-city";
 import { getParsedBlogPost, renderMarkdown } from "~/modules/blog/utils";
 import { component$ } from "@builder.io/qwik";
 import { getPostSlugs } from "~/modules/blog/domain/infrastructure/get-post-slugs";
-import { BlogPostModel } from "~/modules/blog/domain/application/models";
 import { BlogPostFeature } from "~/modules/blog/blog-post-feature";
 
 export default component$(() => {
-  const articleResource = useEndpoint<BlogPostModel>();
+  const articleResource = loadArticles.use();
 
   return <BlogPostFeature articleResource={articleResource} />;
 });
 
-export const onGet: RequestHandler<BlogPostModel> = async ({
-  params: { slug },
-}) => {
+export const loadArticles = loader$(async ({ params: { slug } }) => {
   const { content, data } = getParsedBlogPost({ slug });
   const renderedHTML = await renderMarkdown(content);
 
@@ -26,13 +22,13 @@ export const onGet: RequestHandler<BlogPostModel> = async ({
     content: renderedHTML,
     data,
   };
-};
+});
 
-export const head: DocumentHead<BlogPostModel> = ({
-  data: {
+export const head: DocumentHead = ({ getData }) => {
+  const {
     data: { title, description, shareImage, tags },
-  },
-}) => {
+  } = getData(loadArticles);
+
   return {
     title,
     description,

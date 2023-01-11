@@ -1,8 +1,8 @@
-import { component$, Resource, ResourceReturn } from "@builder.io/qwik";
+import { component$, Resource, Signal } from "@builder.io/qwik";
 import { BlogPostModel } from "../domain/application/models";
 
 export interface BlogPostFeatureProps {
-  articleResource: ResourceReturn<BlogPostModel>;
+  articleResource: Signal<BlogPostModel>;
 }
 
 export const BlogPostFeature = component$(

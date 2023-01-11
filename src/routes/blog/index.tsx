@@ -1,13 +1,12 @@
 import { Slot, component$, Resource } from "@builder.io/qwik";
 import { getBlogPosts } from "../../modules/blog/domain/infrastructure/get-blog-posts";
-import { RequestHandler, useEndpoint } from "@builder.io/qwik-city";
+import { loader$ } from "@builder.io/qwik-city";
 import { BlogPostPreview } from "~/modules/blog/domain/entities/blog-post.model";
 
-export const onGet: RequestHandler<BlogPostPreview[]> = async () =>
-  getBlogPosts();
+export const loadBlogPosts = loader$(async () => getBlogPosts());
 
 export default component$(() => {
-  const blogPostsResource = useEndpoint<BlogPostPreview[]>();
+  const blogPostsResource = loadBlogPosts.use();
 
   return (
     <div class="md:py-10 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-10">
