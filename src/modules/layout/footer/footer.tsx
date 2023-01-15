@@ -1,48 +1,34 @@
 import { component$ } from "@builder.io/qwik";
-import { MailIcon } from "../../shared/ui/icons/mail-icon";
-
-export const social = [
-  {
-    service: "linkedin",
-    url: "https://www.linkedin.com/in/barancezayirli",
-  },
-  {
-    service: "github",
-    url: "https://github.com/barancezayirli",
-  },
-] as const;
+import { SOCIAL_LINKS } from "~/modules/contact/feature/contact";
 
 export const Footer = component$(() => (
-  <footer class="py-6 mx-auto items-center justify-between md:flex">
-    <div class="items-center flex tracking-wide mb-5 md:mb-0 justify-center text-sm ml-2">
-      <span class="inline-block mr-1">
-        © {new Date().getFullYear()} | Developed with
-      </span>
-      <span class="inline-block mr-1">
-        <MailIcon width={32} height={32} />
-      </span>
-      <span class="inline-block mr-1">by</span>
+  <footer class="flex justify-around items-center w-full rounded-lg md:justify-between md:p-10">
+    <div>
       <a
-        class="text-primary-500 hover:text-primary-700 font-bold"
-        href="https://barancezayirli.com"
+        href="https://www.linkedin.com/in/arthurfedotiev/"
         target="_blank"
-        rel="noopener noreferrer"
+        class="flex items-center"
       >
-        Artur Fedotiev
+        <img
+          src="https://flowbite.com/docs/images/logo.svg"
+          class="h-8 mr-3"
+          alt="FlowBite Logo"
+        />
+        <span class="self-center text-md md:text-lg md:text-2xl font-semibold whitespace-nowrap  dark:hover:text-primary-600">
+          Fedotiev Lab
+        </span>
       </a>
     </div>
 
-    <div class="flex items-center justify-center ml-2">
-      {social.map((item) => (
+    <div class="flex space-x-6 justify-center">
+      {SOCIAL_LINKS.map(({ href, icon }) => (
         <a
-          key={item.service}
-          class="footer-social-link"
-          href={item.url}
+          href={href}
           target="_blank"
-          rel="noopener noreferrer"
-          title={item.service}
+          class="text-gray-500 hover:text-gray-900 dark:hover:text-primary-400"
         >
-          <MailIcon width={32} height={32} />
+          {icon}
+          <span class="sr-only">Facebook page</span>
         </a>
       ))}
     </div>

@@ -29,7 +29,7 @@ export const SOCIAL_LINKS = [
     icon: <Whatsapp />,
   },
   {
-    href: "https://twitter.com/ArthurFedotiev",
+    href: "https://twitter.com/messages/compose?recipient_id=1454998625961058314",
     bgColor: "#1da1f2",
     icon: <Twitter />,
   },
