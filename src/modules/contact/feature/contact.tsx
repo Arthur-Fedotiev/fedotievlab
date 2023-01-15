@@ -19,12 +19,12 @@ export const SOCIAL_LINKS = [
     icon: <Github />,
   },
   {
-    href: "https://t.me/ArthurFedotiev",
+    href: "https://t.me/Arthur_Fedotiev",
     bgColor: "#0088cc",
     icon: <Telegram />,
   },
   {
-    href: "https://wa.me/380636000000",
+    href: "https://wa.me/380676204555",
     bgColor: "#25d366",
     icon: <Whatsapp />,
   },
