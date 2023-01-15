@@ -61,3 +61,11 @@ body {
 .footer-social-icon {
   @apply h-6 fill-current;
 }
+
+.animate-hidden-left {
+  @apply transition-all duration-1000 blur-sm -translate-x-full opacity-0;
+}
+
+.animate-hidden-bottom {
+  @apply transition-all duration-1000 blur-sm translate-y-full opacity-0;
+}

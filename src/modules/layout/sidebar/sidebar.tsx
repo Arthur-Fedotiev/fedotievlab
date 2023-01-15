@@ -1,6 +1,6 @@
 import { component$, useStore, $ } from "@builder.io/qwik";
 import { AccordionTriggerIcon } from "../../shared/ui/icons/accordion-trigger";
-import { ProfileDetails } from "./prodile-details-list";
+import { ProfileDetails } from "./profile-details-list";
 export const Sidebar = component$(() => {
   const store = useStore({ show: false });
   const toggle$ = $(() => {
@@ -9,9 +9,9 @@ export const Sidebar = component$(() => {
 
   return (
     <>
-      <div class="flex flex-row justify-between items-center md:flex-col md:max-w-xl  ">
+      <div class="flex flex-row justify-between items-center lg:flex-col lg:max-w-xl  ">
         <img
-          class="object-cover w-32 h-32 rounded-full rounded-t-lg  md:h-auto md:w-48"
+          class="object-cover w-32 h-32 rounded-full rounded-t-lg  lg:h-auto lg:w-48"
           src="/images/avatar.webp"
           alt="Avatar of Artur Fedotiev"
         />
@@ -30,7 +30,7 @@ export const Sidebar = component$(() => {
           class={`${
             store.show ? "rotate-180" : ""
           } flex flex-0 self-start basis items-center justify-between w-full font-medium text-left  
-            rounded-t-xl text-gray-400  hover:bg-gray-800 md:hidden`}
+            rounded-t-xl text-gray-400  hover:bg-gray-800 lg:hidden`}
           aria-expanded={store.show ? "true" : "false"}
           aria-controls="profile-details"
           aria-label="Toggle profile details"

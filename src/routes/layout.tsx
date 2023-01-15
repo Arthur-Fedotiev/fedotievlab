@@ -8,12 +8,12 @@ export default component$(() => {
   const isContact = location.pathname.includes("/contact");
   return (
     <div class="p-3 h-full bg-stone-800 overflow-hidden">
-      <main class="flex flex-col gap-2 md:flex-row md:justify-between min-h-screen mt-16 sm:px-10 md:gap-12">
+      <main class="flex flex-col gap-2 lg:flex-row md:justify-between min-h-screen mt-16 sm:px-10 md:gap-12">
         <NavBar />
         <aside
           class={`
            ${isContact ? "" : "hidden"}
-          w-full self-start p-2 border rounded-lg shadow-md border-gray-700 bg-gray-800 md:sticky md:top-28 md:flex-grow-0 md:flex-shrink-0 md:basis-72`}
+          w-full self-start p-2 border rounded-lg shadow-md border-gray-700 bg-gray-800 lg:sticky lg:top-28 lg:flex-grow-0 lg:flex-shrink-0 lg:basis-72`}
         >
           <Sidebar />
         </aside>

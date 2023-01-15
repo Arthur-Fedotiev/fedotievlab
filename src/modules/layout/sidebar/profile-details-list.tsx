@@ -9,7 +9,7 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
     id="profile-details"
     class={`${
       show ? "max-h-96" : "max-h-0"
-    } transition-max-h duration-700 overflow-hidden md:max-h-full`}
+    } transition-max-h duration-700 overflow-hidden lg:max-h-full`}
   >
     <Separator />
 
