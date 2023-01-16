@@ -11,7 +11,7 @@ import { BlogPostFeature } from "~/modules/blog/blog-post-feature";
 export default component$(() => {
   const articleResource = loadArticles.use();
 
-  return <BlogPostFeature articleResource={articleResource} />;
+  return <BlogPostFeature article={articleResource} />;
 });
 
 export const loadArticles = loader$(async ({ params: { slug } }) => {
