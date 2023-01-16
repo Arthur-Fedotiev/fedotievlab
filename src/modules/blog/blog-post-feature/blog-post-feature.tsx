@@ -1,5 +1,7 @@
-import { component$, Resource, Signal } from "@builder.io/qwik";
+import { component$, Resource, Signal, useStyles$ } from "@builder.io/qwik";
 import { BlogPostModel } from "../domain/application/models";
+import theme from "prismjs/themes/prism-tomorrow.css?inline";
+import lineNumbers from "prismjs/plugins/line-numbers/prism-line-numbers.css?inline";
 
 export interface BlogPostFeatureProps {
   articleResource: Signal<BlogPostModel>;
@@ -7,6 +9,7 @@ export interface BlogPostFeatureProps {
 
 export const BlogPostFeature = component$(
   ({ articleResource }: BlogPostFeatureProps) => {
+    useStyles$(theme + lineNumbers);
     return (
       <>
         <Resource
