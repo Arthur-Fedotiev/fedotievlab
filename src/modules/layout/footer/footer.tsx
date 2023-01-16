@@ -14,7 +14,7 @@ export const Footer = component$(() => (
           class="h-8 mr-3"
           alt="FlowBite Logo"
         />
-        <span class="self-center text-md md:text-lg md:text-2xl font-semibold whitespace-nowrap  dark:hover:text-primary-600">
+        <span class="self-center text-md md:text-lg lg:text-2xl font-semibold whitespace-nowrap dark:hover:text-primary-600">
           Fedotiev Lab
         </span>
       </a>
