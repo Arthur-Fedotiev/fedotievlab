@@ -23,6 +23,14 @@ export const BlogPostFeature = component$(
 
     useClientEffect$(() => {
       const allPres = rootRef.value!.querySelectorAll("pre");
+      const handlers = new Map<HTMLButtonElement, () => void>();
+      const cleanup = () => {
+        for (const [btn, handler] of handlers) {
+          console.log("cleanup");
+
+          btn.removeEventListener("click", handler);
+        }
+      };
 
       for (const pre of allPres) {
         const code = pre.firstElementChild;
@@ -32,19 +40,12 @@ export const BlogPostFeature = component$(
 
         const btn = createCopyButton();
 
-        setClickHandler(btn, code);
+        handlers.set(btn, setClickHandler(btn, code));
 
         pre.appendChild(btn);
       }
 
-      return () => {
-        for (const pre of allPres) {
-          const btn = pre.querySelector(".prism-copy-button");
-          if (btn) {
-            btn.remove();
-          }
-        }
-      };
+      return cleanup;
     });
 
     return (
@@ -65,8 +66,11 @@ export function createCopyButton() {
   return button;
 }
 
-export function setClickHandler(button: HTMLButtonElement, codeEl: Element) {
-  button.addEventListener("click", () => {
+export function setClickHandler(
+  button: HTMLButtonElement,
+  codeEl: Element
+): () => void {
+  const clickHandler = () => {
     if (button.lastChild && button.lastChild.textContent === "Copied") return;
 
     navigator.clipboard.writeText(codeEl.textContent || "");
@@ -77,7 +81,11 @@ export function setClickHandler(button: HTMLButtonElement, codeEl: Element) {
       button.lastChild!.textContent = "Copy";
       button.disabled = false;
     }, 3000);
-  });
+  };
+
+  button.addEventListener("click", clickHandler);
+
+  return clickHandler;
 }
 
 export function createCopySvg() {
