@@ -14,6 +14,6 @@ export interface BlogPostData {
   readonly tags?: string[];
 }
 
-export interface BlogPostPreview extends BlogPostData {
+export interface BlogPostPreviewModel extends BlogPostData {
   readonly readingTime: string;
 }
