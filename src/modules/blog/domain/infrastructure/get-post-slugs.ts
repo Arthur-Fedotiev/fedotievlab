@@ -1,10 +1,13 @@
-import db from "~/modules/shared/domain/infrastructure";
 import { PostSlug } from "../entities/post-slug.model";
-
-const BLOG_POST_COLLECTION = "blog-posts";
+import fs from "fs";
+import { join } from "path";
+const BLOG_POST_PATH = "_posts";
 
 export const getPostSlugs = async (): Promise<PostSlug[]> => {
-  const blogPosts = await db.collection(BLOG_POST_COLLECTION).get();
+  const slugs = fs
+    .readdirSync(join(process.cwd(), BLOG_POST_PATH))
+    .map((path) => path.replace(/\.mdx?$/, ""))
+    .map((slug) => ({ slug }));
 
-  return blogPosts.docs.map((doc) => ({ slug: doc.id }));
+  return slugs;
 };

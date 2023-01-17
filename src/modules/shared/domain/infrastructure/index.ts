@@ -1,5 +1,7 @@
 import admin, { ServiceAccount } from "firebase-admin";
 
+//TODO: remove firebase together with the service account key, and .env vars
+
 const serviceAccount = JSON.parse(
   import.meta.env.VITE_FIREBASE_SERVICE_ACCOUNT_KEY
 );

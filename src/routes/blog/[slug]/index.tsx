@@ -5,8 +5,8 @@ import {
 } from "@builder.io/qwik-city";
 import { getParsedBlogPost, renderMarkdown } from "~/modules/blog/utils";
 import { component$ } from "@builder.io/qwik";
-import { getPostSlugs } from "~/modules/blog/domain/infrastructure/get-post-slugs";
 import { BlogPostFeature } from "~/modules/blog/blog-post-feature";
+import { getPostSlugs } from "~/modules/blog/domain/infrastructure/get-post-slugs";
 
 export default component$(() => {
   const articleResource = loadArticles.use();
@@ -57,8 +57,6 @@ export const head: DocumentHead = ({ getData }) => {
   };
 };
 
-export const onStaticGenerate: StaticGenerateHandler = async () => {
-  return {
-    params: await getPostSlugs(),
-  };
-};
+export const onStaticGenerate: StaticGenerateHandler = async () => ({
+  params: await getPostSlugs(),
+});
