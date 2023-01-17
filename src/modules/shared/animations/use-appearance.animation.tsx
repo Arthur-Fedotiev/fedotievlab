@@ -10,9 +10,14 @@ export const toggleClasses = (
     ? entry.target.classList.add(...classes)
     : entry.target.classList.remove(...classes);
 
-export const useAppearanceAnimation = (classes?: string[]) => {
-  const refsStore = useInView$((entry: IntersectionObserverEntry) =>
-    toggleClasses(entry, [SLIDE_IN_CLASS_NAME, ...(classes || [])])
+export const useAppearanceAnimation = (
+  classes?: string[],
+  options?: IntersectionObserverInit
+) => {
+  const refsStore = useInView$(
+    (entry: IntersectionObserverEntry) =>
+      toggleClasses(entry, [SLIDE_IN_CLASS_NAME, ...(classes || [])]),
+    options
   );
 
   return refsStore;
