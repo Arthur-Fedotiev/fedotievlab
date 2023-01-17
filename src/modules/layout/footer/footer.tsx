@@ -9,11 +9,7 @@ export const Footer = component$(() => (
         target="_blank"
         class="flex items-center"
       >
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          class="h-8 mr-3"
-          alt="FlowBite Logo"
-        />
+        <img src="/images/logo.png" class="h-8 mr-3" alt="FlowBite Logo" />
         <span class="self-center text-md md:text-lg lg:text-2xl font-semibold whitespace-nowrap dark:hover:text-primary-600">
           Fedotiev Lab
         </span>
