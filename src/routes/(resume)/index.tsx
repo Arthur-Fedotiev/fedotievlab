@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { loader$ } from "@builder.io/qwik-city";
+import { DocumentHead, loader$ } from "@builder.io/qwik-city";
 
 import { getResume } from "~/modules/resume/domain";
 import { ResumeFeature } from "~/modules/resume/feature";
@@ -16,3 +16,7 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "About",
+};

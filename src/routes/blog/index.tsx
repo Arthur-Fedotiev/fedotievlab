@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { getBlogPosts } from "../../modules/blog/domain/infrastructure/get-blog-posts";
-import { loader$ } from "@builder.io/qwik-city";
+import { DocumentHead, loader$ } from "@builder.io/qwik-city";
 import { Blog } from "~/modules/blog/blog-feature/blog";
 
 export const loadBlogPosts = loader$(async () => getBlogPosts());
@@ -21,3 +21,7 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Blog",
+};
