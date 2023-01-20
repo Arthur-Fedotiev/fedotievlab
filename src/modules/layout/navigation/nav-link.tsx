@@ -13,7 +13,7 @@ export const NavLink = component$(({ href }: { href: string }) => {
     <a
       class={`
       ${
-        isActive ? "text-yellow-500" : "text-gray-400 hover:text-gray-100"
+        isActive ? "text-yellow-500" : "text-gray-200 hover:text-gray-100"
       } block py-2 pl-3 pr-4 rounded md:font-bold hover:bg-gray-400 md:hover:bg-transparent`}
       href={isActive ? "#" : href}
     >

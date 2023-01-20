@@ -15,7 +15,7 @@ export const RouterHead = component$(() => {
       <link rel="canonical" href={loc.href} />
       <meta
         name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0"
       />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

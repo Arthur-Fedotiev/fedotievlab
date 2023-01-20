@@ -84,14 +84,15 @@ export const ContactForm = component$(
           w-full
           px-6
           py-2.5
-          bg-yellow-500
-          text-white
-          font-medium
+          bg-yellow-400
+          text-neutral-800
+          font-bold
           text-xs
           leading-tight
           uppercase
           rounded
           shadow-md
+          hover:text-white
           hover:bg-secondary-700 hover:shadow-lg
           focus:bg-secondary-700 focus:shadow-lg focus:outline-none focus:ring-0
           active:bg-secondary-800 active:shadow-lg

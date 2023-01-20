@@ -48,7 +48,9 @@ export const NavBar = component$(() => {
               <li>
                 <NavLink href={"/blog"}>Blog</NavLink>
               </li>
-              <NavLink href={"/contact"}>Contact</NavLink>
+              <li>
+                <NavLink href={"/contact"}>Contact</NavLink>
+              </li>
             </ul>
           </div>
         </div>
