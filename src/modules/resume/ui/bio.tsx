@@ -36,7 +36,7 @@ export const Bio = component$(({ name, role, contact }: BioProps) => {
           Object.keys(contact).map((key) => (
             <Contact
               key={key}
-              field={key}
+              field={key as keyof BioProps["contact"]}
               value={contact[key as keyof BioProps["contact"]]}
             />
           ))}

@@ -14,7 +14,7 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
 
     <ul class="grid grid-cols-1 gap-3 my-4 mx-auto sm:grid-cols-2 md:grid-cols-1">
       <li>
-        <ProfileDetailsItem label="Email" src="/icons/email.png">
+        <ProfileDetailsItem label="Email" src="/icons/mail.png">
           <a
             href="mailto:artur.fedotiew@gmail.com"
             class="text-sm hover:text-secondary-500"
@@ -25,7 +25,7 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
       </li>
 
       <li class="flex items-center gap-4 min-w-full">
-        <ProfileDetailsItem label="Phone" src="/icons/phone.png">
+        <ProfileDetailsItem label="Phone" src="/icons/call.png">
           <a href="tel:+4883595607" class="text-sm hover:text-secondary-500">
             +48 (883) 595-607
           </a>
@@ -33,7 +33,7 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
       </li>
 
       <li class="flex items-center gap-4 min-w-full">
-        <ProfileDetailsItem label="Birthday" src="/icons/me.png">
+        <ProfileDetailsItem label="Birthday" src="/icons/birthdate.png">
           <time dateTime="1994-05-17" class="text-sm hover:text-secondary-500">
             May 17, 1994
           </time>
@@ -41,7 +41,7 @@ export const ProfileDetails = component$(({ show }: { show: boolean }) => (
       </li>
 
       <li class="flex items-center gap-4 min-w-full">
-        <ProfileDetailsItem label="Location" src="/icons/home.png">
+        <ProfileDetailsItem label="Location" src="/icons/location.png">
           <address class="text-sm hover:text-secondary-500">
             Wroclaw, Poland
           </address>

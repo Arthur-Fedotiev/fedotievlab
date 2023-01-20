@@ -55,9 +55,13 @@ body {
 }
 
 .animate-hidden-left {
-  @apply transition-all duration-1000 blur-sm -translate-x-full opacity-0;
+  @apply motion-reduce:transition-none transition-all duration-1000 blur-sm -translate-x-full opacity-0;
 }
 
 .animate-hidden-bottom {
-  @apply transition-all duration-1000 blur-sm translate-y-full opacity-0;
+  @apply motion-reduce:transition-none duration-1000 blur-sm translate-y-full opacity-0;
+}
+
+.animate-hidden-right {
+  @apply motion-reduce:transition-none duration-1000 blur-sm translate-x-full opacity-0;
 }

@@ -10,7 +10,7 @@ export const Blog = component$(
   ({
     blogPostPreview: { title, description, tags, slug, image },
   }: BlogProps) => (
-    <a href={`/blog/${slug}`} tabIndex={-1} class="flex flex-col flex-1">
+    <a href={`/blog/${slug}`} tabIndex={-1} class="flex flex-col flex-1 h-full">
       <BlogPreview>
         <img
           q:slot="image"
