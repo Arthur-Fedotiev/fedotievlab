@@ -11,7 +11,7 @@ export const Summary = component$(({ summary }: SummaryProps) => (
       <Avatar />
     </div>
     <p
-      class="text-justify tracking-wide leading-relaxed lg:text-left lg:mx-8 lg:text-lg"
+      class="text-justify  tracking-wide leading-relaxed lg:text-left lg:mx-8 lg:text-lg"
       dangerouslySetInnerHTML={summary}
     />
   </section>

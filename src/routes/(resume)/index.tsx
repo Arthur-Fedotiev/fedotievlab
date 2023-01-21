@@ -8,15 +8,19 @@ export const loadResume = loader$(async () => getResume());
 
 export default component$(() => {
   const resume = loadResume.use();
-  return (
-    <div class="p-4 rounded-2xl bg-neutral-900 border border-neutral-700 text-charcoal-400  min-h-screen sm:p-5 antialiased">
-      <div class="container mx-auto shadow ">
-        <ResumeFeature resume={resume.value} />
-      </div>
-    </div>
-  );
+  return <ResumeFeature resume={resume.value} />;
 });
 
 export const head: DocumentHead = {
   title: "About",
+  meta: [
+    {
+      name: "description",
+      content: "About me",
+    },
+    {
+      name: "keywords",
+      content: "CV, Resume, About",
+    },
+  ],
 };

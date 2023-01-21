@@ -24,7 +24,7 @@ export const Bio = component$(({ name, role, contact }: BioProps) => {
         <h1 class="text-primary-500 text-4xl lg:text-5xl font-bold tracking-wide leading-tight">
           {name}
         </h1>
-        <h2 class="font-light text-lg lg:text-2xl text-primary-900 tracking-widest">
+        <h2 class="font-light text-lg lg:text-2xl text-primary-600 tracking-widest">
           {role}
         </h2>
         <div class="hidden md:block">
