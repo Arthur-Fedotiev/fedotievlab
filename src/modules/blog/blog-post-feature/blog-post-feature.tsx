@@ -5,7 +5,7 @@ import {
   useSignal,
   useStyles$,
 } from "@builder.io/qwik";
-import { BlogPostModel } from "../domain/application/models";
+import { BlogPostModel } from "../domain/entities/models";
 
 import styles from "./blog-post-feature.css?inline";
 import theme from "prismjs/themes/prism-tomorrow.css?inline";
@@ -52,7 +52,6 @@ export const BlogPostFeature = component$(
       <div
         dangerouslySetInnerHTML={articleResource.value.content}
         ref={rootRef}
-        class="w-full prose prose-headings:font-['Titan-One'] prose-code:text-lime-600 prose-headings:font-extrabold prose-img:rounded-xl text-gray-300 prose-code:text- prose-blockquote:text-white prose-headings:text-center prose-headings:text-yellow-500 prose-a:text-yellow-400 prose-a:no-underline"
       />
     );
   }
