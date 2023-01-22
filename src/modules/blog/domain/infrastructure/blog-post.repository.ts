@@ -13,10 +13,8 @@ const getMany = () =>
     fs.readFileSync(path.join(POSTS_PATH, entityPath), "utf-8")
   );
 
-const getPostTitles = (formats = ["mdx, md"]): string[] =>
-  getPathsSync().map((path) =>
-    path.replace(new RegExp(`.(${formats.join("|")})$`), "")
-  );
+const getPostTitles = (): string[] =>
+  getPathsSync().map((path) => path.replace(/\.(md|mdx)$/, ""));
 
 export default {
   getPostTitles,
