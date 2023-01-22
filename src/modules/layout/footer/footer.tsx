@@ -2,19 +2,14 @@ import { component$ } from "@builder.io/qwik";
 import { SOCIAL_LINKS } from "~/modules/contact/feature/contact";
 
 export const Footer = component$(() => (
-  <footer class="flex justify-around items-center w-full rounded-lg md:justify-between md:p-10">
+  <footer class="flex justify-around items-center w-full md:py-5 lg:py-6 rounded-lg md:justify-between md:p-10">
     <div>
       <a
         href="https://www.linkedin.com/in/arthurfedotiev/"
         target="_blank"
         class="flex items-center"
       >
-        <img
-          src="/images/logo.png"
-          class="h-8 w-8 mr-3"
-          alt="FedotievLab Logo"
-        />
-        <span class="self-center text-md md:text-lg lg:text-2xl font-semibold whitespace-nowrap dark:hover:text-primary-600">
+        <span class="self-center text-md md:text-lg lg:text-2xl font-semibold whitespace-nowrap dark:text-primary-400 dark:hover:text-secondary-400">
           Fedotiev Lab
         </span>
       </a>
