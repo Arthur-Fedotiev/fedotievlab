@@ -54,6 +54,14 @@ export const head: DocumentHead = ({ getData }) => {
         content: shareImage,
       },
       {
+        name: "og:image:width",
+        content: "560",
+      },
+      {
+        name: "og:image:height",
+        content: "300",
+      },
+      {
         name: "og:description",
         content: description,
       },
