@@ -14,11 +14,6 @@ export const NavBar = component$(() => {
       <nav class="px-2 sm:px-4 py-2.5 bg-neutral-700 fixed w-full z-20 top-0 left-0 border-b border-gray-600">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="/" class=" flex items-center">
-            <img
-              src=""
-              class="h-6 mr-3 sm:h-9 hidden"
-              alt="FEDOTIEV LAB Logo"
-            />
             <span class="self-center text-xl font-semibold whitespace-nowrap text-primary-500">
               FEDOTIEV LAB
             </span>
