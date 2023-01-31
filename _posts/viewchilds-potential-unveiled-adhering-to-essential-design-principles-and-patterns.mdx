@@ -1,0 +1,305 @@
+---
+title: "@ViewChild’s Potential Unveiled: Adhering to Essential Design Principles and Patterns"
+date: "2023-01-30T05:00:07.322Z"
+description: "Accessing a child component's properties and methods directly through ViewChild can result in tightly coupled components that are hard to maintain. However, Angular's powerful DI system can help us out with Injection Tokens! Injection Tokens provide a way to expose a minimal public interface, adhering to the Interface Segregation Principle and the Dependency Inversion Principle."
+shareImage: https://fedotievlab.vercel.app/images/posts/viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns.webp
+image: https://fedotievlab.vercel.app/images/posts/viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns.webp
+author:
+  name: Arthur Fedotiev
+slug: viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns
+tags: ["Angular", "SOLID", "@ViewChild"]
+---
+
+# @ViewChild’s Potential Unveiled: Adhering to Essential Design Principles and Patterns
+
+![Image of Robot-monk vieving a child](https://fedotievlab.vercel.app/images/posts/viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns.webp)
+
+# @ViewChild’s Potential Unveiled: Adhering to Essential Design Principles and Patterns
+
+![Image of Robot-monk vieving a child](https://fedotievlab.vercel.app/images/posts/viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns.webp)
+
+## INTRODUCTION
+
+We all know that ViewChild is amazing for enabling parent components to access and manipulate their child components.
+
+But oftentimes experienced Angulr developers try to avoid it by any cost, since there is always a challenge to make sure the interaction between the parent and child components remain **maintainable, decoupled, and keep their encapsulation in tact**. 🤔
+
+Unfortunately, oftentimes implementing UI interfaces that require using @ViewChild can break these principles, leading to a coupled architecture, that makes our software not as soft as it sound.
+
+But fear not! 🙌 In this article, we’ll be exploring a **cleaner** way to use @ViewChild in Angular by leveraging injection tokens. 💻 We’ll look at a **simplified version** of a real-world example, such as a shopping website where the parent component can pass a list of items to the child component, and the child component provides a `scrollTo` method. With this method, the parent component can then call the `scrollTo` method of the child component to scroll to the chosen item.
+
+We’ll dive deep 🛀🏻 into the strategies you can use to make sure your components are maintainable, like leveraging injection tokens and applying the Dependency Inversion Principle. 💡
+
+## Naive approach
+
+With ViewChild, accessing child components from the parent component becomes a breeze. 🌬️ Simply pass in a reference to the child component class and voila! 🎉
+
+Find below the most direct way of utilizing it to interact with child components:
+
+```typescript
+export class TightlyCoupledChild {
+  @Input()
+  items: string[] = [];
+
+  somePropertyUsedInTemplate = "somePropertyUsedInTemplate";
+
+  scrollTo(id: string) {
+    scrollToElement(getElementById(id));
+  }
+
+  onItemSelected() {
+    console.log("Now everyone knows about me :(");
+  }
+}
+
+export class TightlyCoupledParent {
+  @ViewChild(TightlyCoupledChild, {
+    static: true,
+  })
+  readonly childCmp: TightlyCoupledChild;
+
+  readonly shoes: string[] = SHOES;
+
+  scrollTo(shoe: string): void {
+    this.childCmp.scrollTo(shoe);
+  }
+}
+```
+
+You can find the complete stackblitz example [here](https://stackblitz.com/edit/angular-ivy-uczppc?file=src/app/tightly-coupled-child/tightly-coupled-child.component.ts).
+
+👀 Accessing a child component’s properties and methods directly through ViewChild can result in tightly coupled components that are hard to maintain. 💡 To see what I mean, take a look at the intellisense provided by your IDE when trying to access the scrollTo method from the TightlyCoupledParent component. 🚨
+
+![enter image description here](https://miro.medium.com/max/1190/1*CuPbu-vBVblPtmBuItH1UQ.webp)
+
+**This can lead to a lot of pain when trying to make changes or fix bugs in the future.** 💻
+
+Here are some drawbacks of such an approach:
+
+1.  \*\*\*The parent component may have access to the entire public API of the child component, even if only a subset is needed.
+2.  The parent component becomes exposed to the internals of the child component, violating the component’s encapsulation.
+3.  Tight coupling between components via ViewChild can make code maintenance a challenge. Any changes to the child component’s API made in a future may require changes to the parent component, leading to extra time and effort.
+4.  It violates the **[Interface Segregation Principle](https://www.youtube.com/watch?v=qvUvrDy_zjo)**. The parent component must mock all or part of the child component’s API to properly test, leading to complex and difficult-to-maintain unit tests.
+5.  By using the ChildComponent directly, the parent component also violates the Dependency Inversion principle, since it lacks an abstraction layer between them, causing a tight coupling and making the system harder to extend.
+
+_\*\*\*Starting with Angular 14, protected properties and methods are accessible from the component template. This may mitigate some problems with tightly coupled ViewChild strategies, but it’s not a complete solution.
+Public API may still need to be exposed for other purposes, and protected modifiers may be misleading since they were conceptually meant for inheritance. Last but not least, the are many codebases where components are being unit tested relying on access to public properties and methods using (a.k.a. White box testin: instantiating a class → invoking methods → asserting properties) which makes it close to impossible to refactor every component and its test suit... 🤔_.
+
+## 💥🔍 You don’t know @ViewChild! 🔍💥
+
+The ViewChild API in Angular allows you to configure a view query. And guess what? It supports selectors like:
+
+- List item
+- Classes with @Component or @Directive decorator
+- Template reference variables
+- Providers defined in the child component tree
+- Providers defined through a string token
+- TemplateRef
+
+👉 The third option, using **Providers defined in the child component tree**, is often overlooked by developers! Here’s how we can utilize the Angular DI system to take advantage of this feature:
+
+1️⃣ Create an interface and InjectionToken
+
+2️⃣ Provide the InjectionToken in the child component and implement the interface
+
+_💡 Now you know about this hidden gem, so let’s start leveraging it! 💡_
+
+Step #1:
+
+```typescript
+// token.ts
+
+export interface Scrollable {
+  scrollTo(id: string): void;
+}
+
+export const SCROLLABLE_BY_ID = new InjectionToken<Scrollable>(
+  "Scrollable by id"
+);
+```
+
+Step #2:
+
+```typescript
+// child.component.ts
+
+@Component({
+  providers: [
+    {
+      provide: SCROLLABLE_BY_ID,
+
+      useExisting: LooselyCoupledChild,
+    },
+  ],
+})
+export class LooselyCoupledChild implements Scrollable {
+  //other code above
+
+  scrollTo(id: string) {
+    scrollToElement(getElementById(id));
+  }
+
+  // other code nelow
+}
+```
+
+**\*Protip**: Implementing an interface is optional but a 💯 highly **recommended** way to write clean and organized code! By using an interface, you can make your code more readable, typesafe and easier to use with the help of your IDE’s code completion and automatic method generation capabilities. 💡 You will have an immediate feedback loop while typing and having a typo, or wrong signature which. **So, let’s code smarter, not harder!** 💪\*
+
+💻 Time to code the parent component! 🚀
+
+```typescript
+// parent.component.ts
+
+export class LooselyCoupledParent {
+  @ViewChild(SCROLLABLE_BY_ID) readonly scrollableChild: Scrollable;
+
+  readonly shoes: string[] = SHOES;
+
+  scrollTo(shoe: string): void {
+    this.scrollableChild.scrollTo(shoe);
+  }
+}
+```
+
+The `LooselyCoupledChild` component implements the `Scrollable` interface and provides itself under the injection token - `SCROLLABLE_BY_ID`.
+
+This is the secret sauce 🧊 of the solution, leveraging Angular’s powerful DI system to tackle those pesky drawbacks.
+
+The `LooselyCoupledParent` component then uses the child component’s `scrollTo()` method 📈 **(in a real world it could be any API you intend to expose from child component)**.
+
+**🔥The injection token approach for ViewChild strategies has several amazing benefits:🔥**
+
+1️⃣ It keeps the parent and child components loosely coupled, following the principle of Dependency Inversion (parent component know nothing about child, the same applies to child, since both of them depend on abstraction — `Scrollable` interface, which belong to child).
+
+2️⃣ The parent component only has access to the necessary part of the child component’s API, not the whole thing, which is a rule dictated by Interface Segragation!
+
+3️⃣ Maintaining the code base in a long run becomes a breeze, since there is no way **(of course there is, it is js** ☠️) to access more than intentionally exposed by child component!
+
+4️⃣ The child component can be used in different scenarios without affecting the parent component.
+
+5️⃣ Unit testing becomes less complex, as the parent component no longer needs to mock the entire child component API. 💻👍
+
+**[Full stackblitz example!](https://stackblitz.com/edit/angular-ivy-uczppc?file=src/app/loosely-coupled-child/loosely-coupled-child.component.ts)**
+
+You want to find more about how to adhere to SOLID principles, and mistakes that transform your codebase into a nightmare of maintenance, here is a sensational [channel by Greg Radzio](https://www.youtube.com/watch?v=YAvGaieRNPw) to check out.
+
+## Pitfalls
+
+1.  When dealing with multiple scrollable components, there’s a pitfall
+    to keep in mind. Angular will only get the SCROLLABLE_BY_ID token
+    from the first component encountered in a template.
+
+```html
+<shoes-list [items]="shoes"></shoes-list>
+<grocery-list [items]="groceries"></grocery-list>
+```
+
+But don’t worry, there’s a solution! 💡
+
+Enter **Metadata Properties**, a powerful yet lesser known feature. Simply put, it’s an object you can pass to the `@ViewChild`. It has some optional properties that can help you out, like `read` and `static`.
+
+To solve our issue, `read` is the perfect fit! By querying each scrollable element separately using **a template reference (used below — “#” ) or a directive,** you can pass the config object with read property equal to `SCROLLABLE_BY_ID`. This way, you'll be able to get each reference to be manipulated separately 🛑💥
+
+```html
+<shoes-list #shoes [items]="shoes"></shoes-list>
+<grocery-list #groceries [items]="groceries"></grocery-list>
+```
+
+```typescript
+// parent.component.ts
+
+@ViewChild("shoes",{  read:  SCROLLABLE_BY_ID  })
+private  readonly  shoesScroll:  Scrollable;
+
+
+@ViewChild("groceries",{  read:  SCROLLABLE_BY_ID  })
+private  readonly  groceriesScroll:  Scrollable;
+```
+
+👍🔥 The code is now telling Angular to find a child element using the **_template reference_** and get the `SCROLLABLE_BY_ID` injectable entity, provided by the child component. The power of Angular’s DI system is on full display here! 💪💥
+
+2.  Oops 💥 Creating a constant for `SCROLLABLE_BY_ID` provider, and then using it in providers array can cause issues, because the `LooselyCoupledChild` component doesn't exist yet! 🤔
+
+```typescript
+// scrollable.provider.ts
+
+export  const  SCROLLABLE_PROVIDER  =  {
+  provide: SCROLLABLE_BY_ID,
+  useExisting: LooselyCoupledChild,
+}
+
+
+
+// child.component.ts
+@Component({
+// this is doomed to fail
+providers:  [SCROLLABLE_PROVIDER]
+})
+
+export  class  LooselyCoupledChild  implements  Scrollable  {
+```
+
+To avoid this pitfall, use the `[forwardRef](https://angular.io/api/core/forwardRef)` to provide `SCROLLABLE_BY_ID`, in the child component. This way, even if the constant is moved, the child component will always be created before the parent component, and the token will be correctly provided to the parent component’s dependency injection system. 💻🚀
+
+```typescript
+export const SCROLLABLE_PROVIDER = {
+  provide: SCROLLABLE_BY_ID,
+  useExisting: forwardRef(() => LooselyCoupledChild),
+};
+```
+
+If you want to learn more about `forwardRef`, I highly recommend checking out [the video by Dmytro Mezhenskyi](https://www.youtube.com/watch?v=uKLvqohfp6I&t=11s) 🎥.
+
+## BONUS
+
+Another option to using `InjectionToken` is to use an abstract class. The child component extends the abstract class and implements the abstract method `scrollTo`().
+
+```typescript
+// scrollable.class.ts
+
+export abstract class Scrollable {
+  abstract scrollTo(): void;
+}
+
+// child.component.ts
+
+@Component({
+  providers: [
+    {
+      provide: Scrollable,
+      useExisting: LooselyCoupledChild,
+    },
+  ],
+})
+export class LooselyCoupledChild extends Scrollable {
+  scrollTo(id: string) {
+    scrollToElement(getElementById(id));
+  }
+}
+```
+
+The main difference between using `InjectionToken` and `abstract  class` is that if the scrollable functionality is not used anywhere in the application. Using `InjectionToken` will result in tree shaking of the unused token from the final bundle. With the abstract class approach — the `Scrollable` class will be bundled regardless of usage.
+
+If you want to dive deep and understand why, I highly recommend you to check **[this video](https://www.youtube.com/watch?v=iBA2VLvqNr4)** 🎥 from the same 💥[magnificent resource](https://www.youtube.com/@DecodedFrontend)💥.
+
+## RECAP
+
+💡The power of ViewChild in Angular allows parent components to effortlessly access and control their child components! 🔨
+
+👉But, the challenge is to make sure this interaction is maintainable, decoupled, and preserves the child component’s encapsulation.
+
+🚨Directly using ViewChild in UI interfaces can result in code that is difficult to maintain and violates the principles of component encapsulation, Dependency Inversion, and Interface Segregation.
+
+💡No worries! Angular’s DI mechanism can help us out with Injection Tokens!
+
+💡Injection Tokens provide a way to expose a minimal public interface, adhering to the Interface Segregation Principle and the Dependency Inversion Principle.
+
+💡Need to manipulate multiple children separately? No problem! Just pass a configuration object to ViewChild with the read property equal to the required Token.
+
+💡Abstract classes can also be used, but keep in mind, they are not tree shakable and should be considered carefully for library authors.
+
+And with that, we’ve come to the end of our journey to clean ViewChild by Injection Tokens in Angular 🎉
+
+But remember, just because you have the power to access and manipulate child components doesn’t mean you should use it irresponsibly. Use your newfound knowledge wisely, my friends 🙃
+
+**Now go out there and create some kick-ass Angular applications that will make the coding gods proud 🚀**
