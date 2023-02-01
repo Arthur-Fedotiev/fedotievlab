@@ -184,20 +184,16 @@
       "role": "Software Engineer",
       "company": "Dash Financial technologies",
       "responsibilities": [
-        "Development of the client system for the financial company.",
-        "Working with high load and high availability system built with Angular 14-15.",
-        "Building UI with high load real time data processing UI with AG-grid.",
-        "Building reusable UI components with Angular Material.",
-        "Implementing reusable mat-form-fields, form controls, and form components with Angular Reactive Forms and Angular Material.",
-        "Managing local state with NgRx Component Store and RxJS.",
-        "Refactoring of legacy codebase to the new architecture with a use of DDD methodology and NX-workspace.",
-        "Improving the code quality and test coverage by migrating to Jest and Cypress as a testing tools for unit and e2e tests respectively.",
-        "Introducing Cypress component-testing for the UI components testing.",
-        "Improving the CI/CD process by introducing NX cloud, affected commands and NX cache.",
+        "Developing a client system for a financial company with high load, high availability and real-time data processing UI with AG-grid.",
+        "Building reusable UI components and mat-form-fields using Angular Material & Tailwind.",
+        "Implementing form controls and components with Angular Reactive Forms and Angular Material.",
+        "Using RxJs and NgRx Component Store for state management.",
+        "Migrating legacy codebase to a new architecture using DDD methodology and NX-workspace.",
+        "Enhancing code quality and test coverage through unit testing with Karma+Jasmine/Jest and integration testing with Angular Testing Library.",
+        "Optimizing the CI/CD process by introducing NX cloud, affected commands and NX cache.",
         "Working with Bitbucket version control system."
       ],
-      "start": "05/2017",
-      "end": "11/2018"
+      "start": "10/2022"
     },
     {
       "role": "Senior software developer at Ciklum",
@@ -207,18 +203,22 @@
         "Participating and ensuring proper client-side architectural solutions to enable autarkic teams, independent deployments possibilities, accelerated on-boarding processes, quality and speed of product delivery.",
         "Use of NX-workspace tools for building a product with mono-repo architecture.",
         "Ensuring code quality and decoupling between domain, which with a use of nx speeds-up CI/CD process, and decreases team dependencies inside repository.",
-        "Lately, extensive studying and analysis of different approaches, drawbacks and benefits of introducing micro front-end architecture, mainly with Module Federation approach.",
-        "Continuously working with documentation.",
+        "Investigating and analyzing of different approaches, drawbacks and benefits of introducing micro front-end architecture, mainly with Module Federation approach.",
+        "Improving the CI/CD process by introducing NX cloud, affected commands and NX cache.",
         "Responsible for creating responsive UI/UX with HTML, CSS3, SASS, TypeScript, Angular 10-12.",
         "Performance-tuning by applying practices of code splitting and lazy loading approaches to large-list UI components, networking, and cashing.",
-        "Developing of reusable components",
+        "Developing of reusable UI components.",
         "Unit testing with Jest.",
+        "Introducing Cypress component-testing for the UI components testing.",
         "Working by Agile Scrum methodology and MS Azure is used as a version control tool",
-        "Mentorship"
+        "Mentorship",
+        "Continuously working with documentation."
       ],
       "secondaryResponsibilities": [
         "Part-time work on internal BE project meant to automate interview processes inside a company.",
-        "Implementing features with nestjs, postgreSQL database, Typeorm"
+        "Implementing features with Nestjs, PostgreSQL database, Typeorm",
+        "Implementing UI with React, Redux, React-Query, React-Testing-Library, Jest, Cypress.",
+        "Implementing authentication with Firebase."
       ],
       "start": "07/2020",
       "end": "08/2021"
@@ -244,6 +244,7 @@
       "company": "RiverSoft",
       "responsibilities": [
         "Designing and developing the web application using HTML5, CSS3, Bootstrap, JavaScript.",
+        "Building admin dashboard using React",
         "Extensive usage of Bootstrap for layout as well as responsive design and SASS for Responsive design.",
         "Performed unit testing after writing the code by using Jest Framework.",
         "Designed and developed the application using Agile Scrum methodology."
@@ -254,32 +255,24 @@
   ],
   "social": [
     {
-      "service": "youtube",
-      "url": "https://www.youtube.com/channel/UCczRc31u_YXNiSpYKxQU_Ug"
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/artur-fedotiev-2b1b4a1a/"
     },
     {
-      "service": "linkedin",
-      "url": "https://www.linkedin.com/in/barancezayirli"
+      "name": "GitHub",
+      "url": "https://github.com/Arthur-Fedotiev"
     },
     {
-      "service": "twitter",
-      "url": "https://twitter.com/barancezayirli"
+      "name:": "Telegram",
+      "url": "https://t.me/ArthurFedotiev"
     },
     {
-      "service": "angellist",
-      "url": "https://angel.co/baran-cezayirli"
+      "name": "Twitter",
+      "url": "https://twitter.com/ArthurFedotiev"
     },
     {
-      "service": "github",
-      "url": "https://github.com/barancezayirli"
-    },
-    {
-      "service": "facebook",
-      "url": "https://www.facebook.com/barancezayirli"
-    },
-    {
-      "service": "instagram",
-      "url": "https://www.instagram.com/barancezayirli"
+      "name": "WhatsApp",
+      "url": "https://wa.me/380676204555"
     }
   ],
   "role": "Software Engineer",

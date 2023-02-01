@@ -28,7 +28,7 @@ export const Bio = component$(({ name, role, contact }: BioProps) => {
           {role}
         </h2>
         <div class="hidden md:block">
-          <DownloadBtn link="/resume.pdf" />
+          <DownloadBtn link="/cv.pdf" />
         </div>
       </div>
       <div class="mt-5 md:mt-0  md:border-neutral-700 md:pl-4">
@@ -42,7 +42,7 @@ export const Bio = component$(({ name, role, contact }: BioProps) => {
           ))}
       </div>
       <div class="md:hidden">
-        <DownloadBtn link="/resume.pdf" />
+        <DownloadBtn link="/cv.pdf" />
       </div>
     </header>
   );
