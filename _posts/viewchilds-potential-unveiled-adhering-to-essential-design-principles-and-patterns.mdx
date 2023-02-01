@@ -14,10 +14,6 @@ tags: ["Angular", "SOLID", "@ViewChild"]
 
 ![Image of Robot-monk vieving a child](https://fedotievlab.vercel.app/images/posts/viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns.webp)
 
-# @ViewChild’s Potential Unveiled: Adhering to Essential Design Principles and Patterns
-
-![Image of Robot-monk vieving a child](https://fedotievlab.vercel.app/images/posts/viewchilds-potential-unveiled-adhering-to-essential-design-principles-and-patterns.webp)
-
 ## INTRODUCTION
 
 We all know that ViewChild is amazing for enabling parent components to access and manipulate their child components.
@@ -83,7 +79,7 @@ Here are some drawbacks of such an approach:
 5.  By using the ChildComponent directly, the parent component also violates the Dependency Inversion principle, since it lacks an abstraction layer between them, causing a tight coupling and making the system harder to extend.
 
 _\*\*\*Starting with Angular 14, protected properties and methods are accessible from the component template. This may mitigate some problems with tightly coupled ViewChild strategies, but it’s not a complete solution.
-Public API may still need to be exposed for other purposes, and protected modifiers may be misleading since they were conceptually meant for inheritance. Last but not least, the are many codebases where components are being unit tested relying on access to public properties and methods using (a.k.a. White box testin: instantiating a class → invoking methods → asserting properties) which makes it close to impossible to refactor every component and its test suit... 🤔_.
+Public API may still need to be exposed for other purposes, and protected modifiers may be misleading since they were conceptually meant for inheritance. Last but not least, the are many codebases where components are being unit tested relying on access to public properties and methods using (a.k.a. White box testing: instantiating a class → invoking methods → asserting properties) which makes it close to impossible to refactor every component and its test suit... 🤔_.
 
 ## 💥🔍 You don’t know @ViewChild! 🔍💥
 
@@ -143,7 +139,7 @@ export class LooselyCoupledChild implements Scrollable {
 }
 ```
 
-**\*Protip**: Implementing an interface is optional but a 💯 highly **recommended** way to write clean and organized code! By using an interface, you can make your code more readable, typesafe and easier to use with the help of your IDE’s code completion and automatic method generation capabilities. 💡 You will have an immediate feedback loop while typing and having a typo, or wrong signature which. **So, let’s code smarter, not harder!** 💪\*
+**Protip**: Implementing an interface is optional but a 💯 highly **recommended** way to write clean and organized code! By using an interface, you can make your code more readable, typesafe and easier to use with the help of your IDE’s code completion and automatic method generation capabilities. 💡 You will have an immediate feedback loop while typing and having a typo, or wrong signature which. **So, let’s code smarter, not harder!** 💪
 
 💻 Time to code the parent component! 🚀
 
@@ -228,8 +224,6 @@ export  const  SCROLLABLE_PROVIDER  =  {
   useExisting: LooselyCoupledChild,
 }
 
-
-
 // child.component.ts
 @Component({
 // this is doomed to fail
@@ -239,7 +233,7 @@ providers:  [SCROLLABLE_PROVIDER]
 export  class  LooselyCoupledChild  implements  Scrollable  {
 ```
 
-To avoid this pitfall, use the `[forwardRef](https://angular.io/api/core/forwardRef)` to provide `SCROLLABLE_BY_ID`, in the child component. This way, even if the constant is moved, the child component will always be created before the parent component, and the token will be correctly provided to the parent component’s dependency injection system. 💻🚀
+To avoid this pitfall, use the [forwardRef](https://angular.io/api/core/forwardRef) to provide `SCROLLABLE_BY_ID`, in the child component. This way, even if the constant is moved, the child component will always be created before the parent component, and the token will be correctly provided to the parent component’s dependency injection system. 💻🚀
 
 ```typescript
 export const SCROLLABLE_PROVIDER = {

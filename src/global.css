@@ -38,7 +38,7 @@ body {
   @apply text-primary-500 tracking-wide text-sm;
 }
 
-.tag {
+.tag:not(.token) {
   @apply px-2 py-1 mr-2 mb-2 bg-primary-800 text-sm text-white inline-block capitalize font-light rounded;
 }
 
