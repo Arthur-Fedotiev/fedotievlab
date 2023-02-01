@@ -11,6 +11,7 @@ export interface BlogPostData {
   readonly image: string;
   readonly author: string;
   readonly slug: string;
+  readonly medium: string;
   readonly tags?: string[];
 }
 
