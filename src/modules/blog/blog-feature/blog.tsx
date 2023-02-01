@@ -8,7 +8,15 @@ export interface BlogProps {
 
 export const Blog = component$(
   ({
-    blogPostPreview: { title, description, tags, slug, image },
+    blogPostPreview: {
+      title,
+      description,
+      tags,
+      slug,
+      image,
+      readingTime,
+      date,
+    },
   }: BlogProps) => {
     const isLoaded = useSignal(false);
     return (
@@ -62,6 +70,9 @@ export const Blog = component$(
                   #{tag}
                 </span>
               ))}
+              <span class="text-sm">
+                {new Date(date).toLocaleDateString()} · {readingTime}
+              </span>
             </div>
           ) : null}
         </BlogPreview>
