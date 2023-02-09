@@ -1,0 +1,430 @@
+---
+title: "💪 Mastering SOLID Principles with Angular: Implementing 💻 Interface Segregation and 🔄 Dependency Inversion! 🚀"
+date: "2023-02-09T18:00:00Z"
+description: "This article is about mastering SOLID principles in Angular, specifically focusing on the Interface Segregation Principle (ISP) and the Dependency Inversion Principle (DIP). The article will go through code examples to demonstrate the violation of these principles and show how to implement solutions compliant with these principles in Angular using the technique of Injection Tokens factory providers."
+shareImage: https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/cover.webp
+image: https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/cover.webp
+author:
+  name: Arthur Fedotiev
+slug: mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion
+medium: https://medium.com/@artur.fedotiew/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-f2cbcc68ce21
+tags: ["Angular", "SOLID", "Dependency Injection", "ISP", "DIP"]
+---
+
+# 💪 Mastering SOLID Principles with Angular: Implementing 💻 Interface Segregation and 🔄 Dependency Inversion! 🚀
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/cover.webp"
+  alt="Cover image"
+  class="w-[600px] h-[404px]"
+/>
+
+## Introduction
+
+Attention all you coders and design pattern aficionados! 🙋‍♀️ Today, we’re venturing into the SOLID universe, and focusing on two of its big players: the **Interface Segregation Principle** (ISP) and the **Dependency Inversion Principle** (DIP).
+
+Below is a small reminder of what they are, but this article assumes you have some knowledge of both patterns, and an experience with Angular.
+
+> 💡 Interface Segregation Principle (ISP) 💻 — Clients should not be forced to depend on interfaces they do not use.
+>
+> 💡 Dependency Inversion Principle (DIP) 🧱 — High-level modules should not depend on low-level modules, both should depend on abstractions.
+
+These principles are critical to creating scalable and maintainable software systems, and they can make a significant impact on the long-term success of your codebase. In this article, we’ll explore **what** ISP and DIP are, **how** they may be violated, **why** it is important to apply them in your Angular applications, and how to implement solutions compliant to those principles in Angular.
+
+🤓 We are going to go through some code examples, where those principles violated and eventually refactor and eliminate some of the drawbacks by leveraging Angular Dependency Injection system using the technique: **Injection Tokens factory providers**.  
+**Get ready to solidify your coding skills! 💪**
+
+Whether you’re a seasoned developer or just starting out, I hope by the end of this article you will learn something new, or at the very list look at the same old thing from new perspectives. So let’s get started! 🚀
+
+> All the examples in the article are based on the code living in the repo **💻** I’ve prepared: [**NG_SOLID**](https://github.com/Arthur-Fedotiev/ng-solid-retail)**.**
+>
+> **Live application:** [https://ng-solid-retail.firebaseapp.com/](https://ng-solid-retail.firebaseapp.com/)
+>
+> **You can find starting code at the branch:** [**violation/isp-and-dip**](https://github.com/Arthur-Fedotiev/ng-solid-retail/blob/violation/isp-and-dip/libs/products/feature-create-product/src/lib/create-product/create-product.component.ts)**. And the final code here:** [**comply/isp-and-dip**](https://github.com/Arthur-Fedotiev/ng-solid-retail/tree/comply/isp-and-dip)**.**
+>
+> **It is not necessary to explore codebase, though it would provide you a better** [**grasp**](<https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)>) **on what is going on.**
+
+## UN-SOLID approaches
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/un-solid.webp"
+  alt="Un-SOLID approach"
+  class="w-[600px] h-[300px]"
+/>
+
+It is a time to get our hands dirty and dive into some code! Let’s start our journey form a simple [smart component](https://indepth.dev/posts/1478/designing-angular-architecture-container-presentation-pattern) and a gist of its code:
+
+```typescript
+export class CreateProductComponent {
+  private readonly productsFacade = inject(ProductsFacadeService);
+
+  public readonly categories$ = this.productsFacade.categories$;
+  public readonly retailers$ = this.productsFacade.retailers$;
+
+  public onSave(): void {
+    this.productsFacade.createProduct(this.productForm.getRawValue());
+  }
+
+  //...
+}
+```
+
+This component uses `ProductsFacadeService`, injecting it via [inject function](https://netbasal.com/unleash-the-power-of-di-functions-in-angular-2eb9f2697d66). The Facade itself is a representation of [**View Facade pattern**](https://medium.com/angular-in-depth/angular-you-may-not-need-ngrx-e80546cc56ee), and has a significant API surface since it is meant to be used across Product domain to handle [**persistent state**](https://blog.nrwl.io/managing-state-in-angular-applications-22b75ef5625f) concerned with **Product domain (do not spend to much time inspecting the code below, it is for presentational reasons of a complexity of the Facade!).**
+
+```typescript
+
+export  class  TightlyCoupledChild  {
+export class ProductsFacadeService {
+  private state = new ProductsStateModel(
+    this.productsChanges$,
+    this.categoriesChanges$,
+    this.retailersChanges$
+  );
+
+  //... public API used across Product doman
+
+  public readonly productsListForEachPrice$ = this.products$.pipe(
+    map((products) => products.reduce(toProductsByPrice, []))
+  );
+
+  public readonly productsShortInfo$ = this.productsListForEachPrice$.pipe(
+    map((products) => products.map(toProductShortInfo))
+  );
+
+  public readonly categories$ = this.state$.pipe(
+    map((state) => state.categories$),
+    switchAll(),
+    distinctUntilChanged(),
+    filter(Boolean)
+  );
+
+  public readonly retailers$ = this.state$.pipe(
+    map((state) => state.retailers$),
+    switchAll(),
+    distinctUntilChanged(),
+    filter(Boolean)
+  );
+
+  // ... other private properties
+
+  public createProduct(createProductFormValue: CreateProductForm): void {
+    this.productsApi
+      .createProduct(this.toProductSaveDto(createProductFormValue))
+      .pipe(
+        tap(() => this.navigateToProductDisplayPage()),
+        take(1)
+      )
+      .subscribe();
+  }
+
+  public deleteSelectedProduct(id: string): void {
+    this.deleteProduct(id);
+    this.navigateToProductDisplayPage();
+  }
+
+  private deleteProduct(id: string): void {
+    this.productsApi.deleteProduct(id).pipe(take(1)).subscribe();
+  }
+
+  public productSelected(productId: string) {
+    this.navigateToProductPage(productId);
+  }
+
+  public selectedProductUpdate(product: ProductViewModel) {
+    this.productsApi
+      .updateProduct(this.toProductSaveDto(product))
+      .pipe(tap(this.updateSelectedProduct), take(1))
+      .subscribe();
+  }
+```
+
+**The ultimate responsibility of a component** is to send a command to `ProductsFacadeService` to create a new product. The component also needs _retailers_ and _categories_ from the Facade, in order to provide the user with a possibility to chose them in a form.
+
+You can see how the full complexity of `ProductsFacadeService` is far beyond the needs of the `CreateProductComponent.`  
+The component only needs an API to send **command:**`createProduct()` and **query** reactive data: `categories$`, `retailers$,` but it receives additional unnecessary information.
+
+**You may reasonably ask a question though: “Why should I care?** I have a whole Facade, I use a subset of its functionality, my code works, I ship it and customers create their products as hell, a clock hits 5p.m. and I go home, right?..”
+
+Sure thing, if you are building an application containing one form and a list of products (why do you use Angular, man?🤔), finish your project and sail into the sunset, all that fancy talk about design principles and SOLID architecture might be a bit much.  
+But if you are building a massive app, **with main trait of software, which is — it is constantly evolving, changing**, and all of it happens in collaboration of a team of developers, — **Neglecting SOLID principles is like skipping a leg day at the gym 💪 — it’s tempting since it’s easier, and you might feel okay for the moment, but you’re setting yourself up for some major struggles down the line…**
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/chicken-legs.webp"
+  alt="Chicken legs"
+  class="w-[570px] h-[1000px]"
+/>
+
+Let’s put the jokes aside 🤪 and examine the actual drawbacks of our current implementation💔:
+
+1.  **Interface Segregation Principle (ISP) violation**: The component knows about API it does not use.
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/isp-violation.webp"
+  alt="ISP violation"
+  class="w-[600px] h-[270px]"
+/>
+
+It is forced to depend on the Facade and all of its methods, even though it only needs a couple of them. If at any point you need to swap dependency, e.g. `{provide: ProductsFacade, useClass: SwappedProductFacade}`, that wouldn’t be that easy, as you would have to implement the whole `ProductsFacade` interface with all its methods and properties `CreateProductComponent`does NOT need!  
+**That’s exactly where the current implementation is violating the Interface Segregation Principle (ISP).**
+
+2.  **Tests are a mess**: In order to test the component, you have to either mock out everything in the Facade or assert the type of a mock. Mocking out everything is cumbersome, and time consuming, hence most of the time you’d probably go with a second approach (see bellow).
+
+```typescript
+beforeEach(async () => {
+ productFacadeMock = {
+ createProduct: jest.fn(),
+ categories$: categoriesSubj,
+      retailers$: retailersSubj,
+ // this property does not exist and compiler doesn't catch it because of assertion below
+ zombiMethodWhichWereRemovedAndForgottent: jest.fn(),
+ // asserts the type to satisfy TS compiler
+ } as unknown as jest.Mocked<ProductsFacadeService>;
+```
+
+The disadvantage of it shows up when you refactor (remove/rename properties or methods) and eventually your **test suit and your actual code may get out of sync** (mocks may still contain some stuff long gone and TS isn’t gonna help you since you shut him down).
+
+3.  **Tight(er) coupling & Dependency Inversion violation**. Even though we are using **almighty Angular DI** system to get a hold of a Facade, which looses coupling to some degree, we still do not fully leverage it!  
+    **Dependency Inversion** principle says that higher level modules (in our case it is `CreateProductComponent`) should not depend on lower level modules (`ProductsFacadeService`), both should depend on abstractions (in _Typescript_ — `abstract class/interface/type`).  
+    **The missing piece is that abstraction that smart people are talking about.**
+
+4.  **Unclear intention**. It is not clear to collaborators of the codebase which API was meant to be used for particular use case. It may lead to utilising methods and data that was not supposed to be used by the component, which in a long run makes code harder to maintain, and us developers part-time cooks mastering tasty Angular [spaghetty dishes](https://en.wikipedia.org/wiki/Spaghetti_code) .
+
+# SOLIDification
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/solidification.webp"
+  alt="Solidified lava"
+  class="w-[600px] h-[404spx]"
+/>
+
+The solution to these problems is to make sure that instead of having the component directly depend on the Facade, create an interface that represents the functionality that the component needs and provide the way for the component to use it💥.
+
+🚀**Here is how we implement it step by step.** **Let’s get it started.**🚀
+
+1.  **Create an interface for the** `**createProduct**`: In this step, an interface `CreateProductAPI` is created **to define the behavior of the command**. This interface **acts as an Abstraction** mentioned in DIP definition.
+
+> …both should depend on abstraction.
+
+Additionally, adhering to this interface helps us comply with the ISP, by **ensuring that our component only depends on the specific command** it needs.
+
+> …should not be forced to depend on interfaces they do not use
+
+```typescript
+export interface CreateProductAPI {
+  createProduct(product: CreateProductForm): void;
+}
+```
+
+**2. Create an Injection Token for the command API**: An Injection Token `CREATE_PRODUCT_API` is created to expose the command API to the rest of the application. _In Angular,_ `_InjectionToken_` _is a way to inject something that does not have runtime representation (like typescript_ `_interfaces/types_`_)._
+
+```typescript
+// create Injection Token to expose command API
+export const CREATE_PRODUCT_API = new InjectionToken<CreateProductCommand>(
+  "CREATE_PRODUCT_API"
+  //...
+);
+```
+
+**3. Specifying the scope and Defining the factory method of the dependency**: The `providedIn` property of the object is used to specify the scope of the dependency.
+
+The `factory` property of the object is a function that returns an object representing the command API. The `inject` function is used to get an instance of the `ProductsFacadeService`.
+
+```typescript
+// create Injection Token to expose command API
+export const CREATE_PRODUCT_API = new InjectionToken<CreateProductCommand>(
+  "CREATE_PRODUCT_API",
+  {
+    // optional (if you want scope the dependency to module or route(standalone)
+    // you'd skip this property and provide token explicitly
+    providedIn: "root",
+    factory: () => inject(ProductsFacadeService),
+    /* instead of `inject` function you could use deps:
+     * factory: (productFacade: ProductsFacadeService) => productFacade,
+     * deps: [ProductsFacadeService]
+     */
+  }
+);
+```
+
+_NOTE that if_ `_ProductsFacadeService_` _would not be_ `_root_` _dependency, you would have to provide the token either at the same level or down the_ [_hierarchical chain of Injectors._](https://www.youtube.com/watch?v=G8zXugcYd7o) _If you need to scope the dependency to the current module/standalone route/component,_ **_you can skip this property_** _and provide the token explicitly, e.g.:_
+
+```typescript
+export const CREATE_PRODUCT_API = new InjectionToken<CreateProductCommand>(
+  "CREATE_PRODUCT_API"
+);
+
+//in component
+
+@Component({
+  // other properties
+  providers: [
+    ProductsFacadeService, // could be provided elsewhere up the chain
+    { provide: CREATE_PRODUCT_API, useExisting: ProductsFacadeService },
+  ],
+})
+export class SomeComponent {}
+```
+
+4.  **Implement the interface by** `**ProductsFacadeService**`: ProductsFacadeService — `_low-level module,_` depends on `_abstraction_` by implementing the newly created interface.
+
+```typescript
+// facade.ts
+export class ProductsFacadeService inplements CreateProductAPI {
+  createProduct(product: CreateProductForm): {
+   // creation product logic goes here
+  }
+}
+```
+
+5. **Use** `**CREATE_PRODUCT_API**` : CreateProductComponent (`_low-level module_`) injects `CREATE_PRODUCT_API` and closes the chain of fulfilling DIP by depending on `CreateProductAPI` interface (`_abstraction_`).
+
+> …both should depend on abstractions
+
+```typescript
+// component.ts
+export class CreateProductComponent {
+  private readonly createProductAPI = inject(CREATE_PRODUCT_API);
+
+  onSave(formData: CreateProductForm): void {
+    this.createProductAPI.createProduct(formData);
+  }
+}
+```
+
+_\*I do not repeat the same steps for querying data, since it it basically the same thing._
+
+**Before wrapping up and counting achievements, I have to say it still has a little room for improvement!**
+
+When you use `inject` to get the instance of `ProductsFacadeService` in your component, Angular is actually giving you access to the already instantiated and registered instance of the service with its DI system.
+
+This allows you to call the `createProduct` method and your IDE autocomplete will not show anything except from it.  
+However, if you peek under the hood using browser's Developer Tools or even better, an Angular DevTools, you'd see a different story:
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/whole-api.webp"
+  alt="Whole API availablew"
+  class="w-[600px] h-[600px]"
+/>
+
+**What does this mean and why does it matter?** Well, if someone were to go rogue and sneak their way into the inner workings of your code by casting the type of `createProductAPI` (e.g. `(createProductAPI as any).whateverMethod()` or `createProductAPI[‘whateverMethod’](),` now the API meant to be hidden can be actually used!
+
+Now, I know this may seem like a minor issue to some, but let me paint a picture for you. Imagine you’re working with a **third-party API** and you run into some troubles. Desperate for a solution, you turn to StackOverflow and stumble upon a workaround that uses some private API or even a public API that wasn’t properly hidden by the library’s authors. And because you’re under time pressure, you use it with a little comment that says “this works for now, but don’t ask me how.”
+
+If you’ve never come across a codebase with at least one of these scenarios, I’ve got to ask — have you even worked on a real-life project before? 🤔
+
+**Even though it is all about our own codebase and dependencies, adopting the perspective of treating injected instances as third-party APIs in the context of component development can lead to the creation of more maintainable and decoupled code from the outset.**
+
+## Foolproofing Your DI
+
+Let us refactor our current implementation to address the issue mentioned above:
+
+```typescript
+// create interface for the command
+export interface CreateProductCommand {
+  execute(product: CreateProductForm): void;
+}
+
+// create Injection Token to expose command API
+export const CREATE_PRODUCT_COMMAND = new InjectionToken<CreateProductCommand>(
+  "CREATE_PRODUCT_COMMAND",
+  {
+    // optional (if you want scope the dependency to module or route(standalone)
+    // you'd skip this property and provide token explicitly
+    providedIn: "root",
+    factory: () => {
+      const productsFacade = inject(ProductsFacadeService);
+
+      return {
+        // quirk with binding the proper context needed to make sure createProduct has proper `this`
+        execute: productsFacade.createProduct.bind(productsFacade),
+      };
+    },
+  }
+);
+
+// component.ts
+export class CreateProductComponent {
+  private readonly createProductCommand = inject(CREATE_PRODUCT_COMMAND);
+  //...
+}
+```
+
+Let us go step by step of what have changed and what the consequences are:
+
+1.  **Create an interface for the command**: This interface includes a method named “execute”. The choice of such an abstract name for the method is intentional, as it is supposed to provide a consistent approach to naming Commands throughout the codebase in a future.
+2.  Create an Injection Token for the command API (same).
+3.  Specifying the scope of the dependency (same).
+4.  **Define the factory method.** **_Here’s where the real action happens in our revamp!_** The object returned has a single method `execute` which is affectively the `createProduct` method from the `ProductsFacadeService` instance (bound to the correct context to make sure `this` equals to currently provided instance of `ProductsFacadeService)`.
+
+Now if you do the inspection in Angular DevTools again, you’ll see that instead of having an access to the whole Facade, it is now indeed minimal needed interface:
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/partial-api.webp"
+  alt="Part of API available"
+  class="w-[460px] h-[246px]"
+/>
+
+`_bound createProduct_` _is clickable and would get you directly to the source code of a facade, which is one more reason to use Angular DevTools for debugging purposes._
+
+**Below is the example of the final version of implementing the same approach for queries. Both, categories and retailers were combined onto one stream of ViewModel:**
+
+```typescript
+export interface CreateProductVmQuery {
+  get(): Observable<CreateProductVM>;
+}
+
+export const CREATE_PRODUCT_VM_QUERY = new InjectionToken<CreateProductVmQuery>(
+  "CREATE_PRODUCT_VM_QUERY",
+  {
+    providedIn: "root",
+    factory: () => {
+      const productsFacade = inject(ProductsFacadeService);
+
+      return {
+        get: () =>
+          combineLatest({
+            categories: productsFacade.categories$,
+            retailers: productsFacade.retailers$,
+          }),
+      };
+    },
+  }
+);
+
+// component.ts
+export class CreateProductComponent {
+  private readonly createProductCommand = inject(CREATE_PRODUCT_COMMAND);
+  public readonly vm$ = inject(CREATE_PRODUCT_VM_QUERY).get();
+
+  //..
+  public onSave(): void {
+    this.createProductCommand.execute(this.productForm.getRawValue());
+  }
+  //...
+}
+```
+
+## Achievements
+
+What do we actually achieve with all this work done:
+
+1.  **Loose Coupling:** code becomes less dependent on each other and makes it easier to modify and maintain in the future. Component does not depend or know about any API it doesn’t need.
+2.  **Scalability**: This approach allows you to add new functionalities to Facade without breaking a component. If desired **view model** of component changes you just need to adjust the dedicated token that belongs to component.
+3.  **Reusability**: By using interfaces, your code can be reused in other parts of the application. If you want to apply different logic in different places, you can create **another token with the same interface**. It would be much harder to create another provider with the same interface the Facade has, since it has a lot of unrelated API from the component perspective.
+4.  **Easier to Test**: SOLID principles, interface segregation and dependency inversion make it easier to write tests since you need to mock the token and stub the data/spy on a command.
+5.  **Future-proof**: Exposing only minimal API and ensuring it not only by the interface, but by real elimination of everything else inside Token’s factory, you significantly reduce the surface for hasty workarounds that access API not meant to be used. You worry about consumers of your API protecting them from themselves. 🚀💻💪
+
+## RECAP
+
+- 💎 SOLID principles provide a solid foundation for building scalable, maintainable and testable applications.
+- Interface Segregation Principle encourages splitting large interfaces into smaller, specialized ones to provide a better level of abstraction.
+- Dependency Inversion Principle promotes loose coupling between modules and encourages the use of abstractions, rather than concrete implementations.
+- 🔑 Use Injection Tokens with factories to adhere to code following ISP & DIP.
+- Interface exposed by Injection Token is the abstraction mentioned in DIP.
+- Interface exposing minimal necessary API is what makes consumers does not depend on what they do not need (ISP).
+- 🧞‍♂️ Use the `inject` function or 🛍️ `deps` array to get values from the dependency injection system inside a factory of your token.
+- Don’t forget to properly scope dependencies and provide Token at the same or lower level of Injectors.
+- Exposing the minimal necessary API surface leads to 🧠 more maintainable, 🚀 scalable, testable, reusable, 💃 flexible and intention-clear code.
+- The example Github repository demonstrates the implementation of SOLID principles with Angular, by tackling common flaws and introducing best practices.
+
+# **Most importantly: DO NOT skip leg day!**
