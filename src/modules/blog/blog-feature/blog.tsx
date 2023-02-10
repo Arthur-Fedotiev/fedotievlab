@@ -60,7 +60,9 @@ export const Blog = component$(
           <span q:slot="title" class="text-charcoal-900 hover:text-yellow-600">
             {title}
           </span>
-          <span q:slot="description">{description}</span>
+          <span q:slot="description" class="line-clamp-6" title={description}>
+            {description}
+          </span>
 
           {tags ? (
             <div q:slot="footer">
@@ -72,7 +74,7 @@ export const Blog = component$(
                   #{tag}
                 </span>
               ))}
-              <span class="text-sm block">
+              <span class="block text-sm mt-2">
                 {formatPreviewDate(date)} · {readingTime}
               </span>
             </div>

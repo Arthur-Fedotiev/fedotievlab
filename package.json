@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.10.0",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "firebase-admin": "^11.4.0",
     "gray-matter": "^4.0.3",
     "ramda": "^0.28.0",
