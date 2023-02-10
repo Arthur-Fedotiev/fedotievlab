@@ -33,6 +33,7 @@ export const head: DocumentHead = {
         "Software Engineer, Web Development, HTML + CSS, SASS, JavaScript, TypeScript, Angular, Enterprise SPA, Client Side Architecture, Micro Front-Ends, Code Quality, SOLID principles, Test Coverage, Meetups, Mentoring",
     },
     {
+      name: "image",
       property: "og:image",
       content: "https://fedotievlab.vercel.app/images/avatar.webp",
     },
