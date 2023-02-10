@@ -12,7 +12,7 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "About",
+  title: "Artur Fedotiev | Software Engineer",
   meta: [
     {
       name: "author",
@@ -33,17 +33,30 @@ export const head: DocumentHead = {
         "Software Engineer, Web Development, HTML + CSS, SASS, JavaScript, TypeScript, Angular, Enterprise SPA, Client Side Architecture, Micro Front-Ends, Code Quality, SOLID principles, Test Coverage, Meetups, Mentoring",
     },
     {
+      name: "og:title",
+      content: "Artur Fedotiev | Software Engineer",
+    },
+    {
+      name: "og:description",
+      content:
+        "Artur Fedotiev is a software engineer with over 6 years of experience in developing web applications using HTML + CSS, SASS, JavaScript, TypeScript. He has deep knowledge in developing enterprise SPA's using Angular and is experienced in making client side architectural solutions and working with micro front-ends. He is also a skilled leader, having led up to 10 FE developers in his career.",
+    },
+    {
+      name: "og:url",
+      content: "https://fedotievlab.vercel.app",
+    },
+    {
       name: "image",
       property: "og:image",
       content: "https://fedotievlab.vercel.app/images/avatar.webp",
     },
     {
       property: "og:image:width",
-      content: "128",
+      content: "250",
     },
     {
       property: "og:image:height",
-      content: "134",
+      content: "263",
     },
   ],
 };
