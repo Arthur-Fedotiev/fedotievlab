@@ -15,12 +15,34 @@ export const head: DocumentHead = {
   title: "About",
   meta: [
     {
+      name: "author",
+      content: "Artur Fedotiev",
+    },
+    {
+      name: "application-name",
+      content: "Artur Fedotiev Resume",
+    },
+    {
       name: "description",
-      content: "About me",
+      content:
+        "Artur Fedotiev is a software engineer with over 6 years of experience in developing web applications using HTML + CSS, SASS, JavaScript, TypeScript. He has deep knowledge in developing enterprise SPA's using Angular and is experienced in making client side architectural solutions and working with micro front-ends. He is also a skilled leader, having led up to 10 FE developers in his career.",
     },
     {
       name: "keywords",
-      content: "CV, Resume, About",
+      content:
+        "Software Engineer, Web Development, HTML + CSS, SASS, JavaScript, TypeScript, Angular, Enterprise SPA, Client Side Architecture, Micro Front-Ends, Code Quality, SOLID principles, Test Coverage, Meetups, Mentoring",
+    },
+    {
+      name: "og:image",
+      content: "https://fedotievlab.vercel.app/images/avatar.webp",
+    },
+    {
+      name: "og:image:width",
+      content: "128",
+    },
+    {
+      name: "og:image:height",
+      content: "134",
     },
   ],
 };
