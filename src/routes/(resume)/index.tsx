@@ -48,7 +48,12 @@ export const head: DocumentHead = {
     {
       name: "image",
       property: "og:image",
-      content: "https://fedotievlab.vercel.app/images/avatar.webp",
+      content: "https://fedotievlab.vercel.app/images/avatar.png",
+    },
+    {
+      name: "image",
+      property: "og:image:secure_url",
+      content: "https://fedotievlab.vercel.app/images/avatar.png",
     },
     {
       property: "og:image:width",

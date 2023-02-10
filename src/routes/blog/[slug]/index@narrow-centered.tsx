@@ -46,23 +46,23 @@ export const head: DocumentHead = ({ getData }) => {
         content: description,
       },
       {
-        name: "og:title",
+        property: "og:title",
         content: title,
       },
       {
-        name: "og:image",
+        property: "og:image",
         content: shareImage,
       },
       {
-        name: "og:image:width",
+        property: "og:image:width",
         content: "560",
       },
       {
-        name: "og:image:height",
+        property: "og:image:height",
         content: "300",
       },
       {
-        name: "og:description",
+        property: "og:description",
         content: description,
       },
     ],
