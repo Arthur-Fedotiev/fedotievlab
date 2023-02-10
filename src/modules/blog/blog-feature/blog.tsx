@@ -1,6 +1,7 @@
 import { component$, useSignal } from "@builder.io/qwik";
 import { BlogPostPreviewModel } from "../domain/entities/blog-post.model";
 import { BlogPreview } from "../ui/blog-preview";
+import { formatPreviewDate } from "../utils/format-preview-date";
 
 export interface BlogProps {
   blogPostPreview: BlogPostPreviewModel;
@@ -19,6 +20,7 @@ export const Blog = component$(
     },
   }: BlogProps) => {
     const isLoaded = useSignal(false);
+
     return (
       <a
         href={`/blog/${slug}`}
@@ -70,8 +72,8 @@ export const Blog = component$(
                   #{tag}
                 </span>
               ))}
-              <span class="text-sm">
-                {new Date(date).toLocaleDateString()} · {readingTime}
+              <span class="text-sm block">
+                {formatPreviewDate(date)} · {readingTime}
               </span>
             </div>
           ) : null}
