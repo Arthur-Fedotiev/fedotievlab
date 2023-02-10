@@ -48,7 +48,7 @@ export const Experience = component$(({ data }: ExperienceProps) => {
             {item.secondaryResponsibilities ? (
               <>
                 <h4>Secondary:</h4>
-                <Responsibilities data={item.responsibilities} />
+                <Responsibilities data={item.secondaryResponsibilities} />
               </>
             ) : null}
           </article>
