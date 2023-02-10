@@ -1,6 +1,6 @@
 ---
 title: "💪 Mastering SOLID Principles with Angular: Implementing 💻 Interface Segregation and 🔄 Dependency Inversion! 🚀"
-date: "2023-02-09T18:00:00Z"
+date: "2023-02-09"
 description: "This article is about mastering SOLID principles in Angular, specifically focusing on the Interface Segregation Principle (ISP) and the Dependency Inversion Principle (DIP). The article will go through code examples to demonstrate the violation of these principles and show how to implement solutions compliant with these principles in Angular using the technique of Injection Tokens factory providers."
 shareImage: https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/cover.webp
 image: https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/cover.webp
@@ -303,7 +303,7 @@ This allows you to call the `createProduct` method and your IDE autocomplete wil
 However, if you peek under the hood using browser's Developer Tools or even better, an Angular DevTools, you'd see a different story:
 
 <img
-  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/whole-api.webp"
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/whole-api.png"
   alt="Whole API availablew"
   class="w-[600px] h-[600px]"
 />
@@ -361,7 +361,7 @@ Let us go step by step of what have changed and what the consequences are:
 Now if you do the inspection in Angular DevTools again, you’ll see that instead of having an access to the whole Facade, it is now indeed minimal needed interface:
 
 <img
-  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/partial-api.webp"
+  src="https://fedotievlab.vercel.app/images/posts/mastering-solid-principles-with-angular-implementing-interface-segregation-and-dependency-inversion/partial-api.png"
   alt="Part of API available"
   class="w-[460px] h-[246px]"
 />

@@ -1,0 +1,128 @@
+---
+title: "⚙️Simplifying Navigation Error Handling with Angular’s Upcoming Feature⚙️"
+date: "2023-02-02"
+description: "Angular's new navigation error handler feature is set to simplify error handling for developers and provide a more ergonomic API. The new API, enabled through the withNavigationErrorHandler function, eliminates some drawbacks by providing developers with a quick and short way to define a function to handle NavigationError events. The new feature utilizes the EnvironmentInjector.runInContext API, allowing developers to leverage the inject function and avoid some RxJS pitfalls along the way."
+shareImage: https://fedotievlab.vercel.app/images/posts/simplifying-navigation-error-handling-with-angulars-upcoming-feature/cover.webp
+image: https://fedotievlab.vercel.app/images/posts/simplifying-navigation-error-handling-with-angulars-upcoming-feature/cover.webp
+author:
+  name: Arthur Fedotiev
+slug: simplifying-navigation-error-handling-with-angulars-upcoming-feature
+medium: https://medium.com/@artur.fedotiew/%EF%B8%8F-simplifying-navigation-error-handling-with-angulars-upcoming-feature-%EF%B8%8F-b55ee04d246a
+tags: ["Angular", "Router"]
+---
+
+# ⚙️ Simplifying Navigation Error Handling with Angular’s Upcoming Feature⚙️
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/simplifying-navigation-error-handling-with-angulars-upcoming-feature/cover.webp"
+  alt="Map"
+  class="w-[680px] h-[480px]"
+/>
+
+> **You can read [this article](https://medium.com/@artur.fedotiew/%EF%B8%8F-simplifying-navigation-error-handling-with-angulars-upcoming-feature-%EF%B8%8F-b55ee04d246a) on [Medium](https://medium.com/@artur.fedotiew) as well if you wish!**
+>
+> Angular is set to introduce a [**new navigation error handler feature**](https://github.com/angular/angular/commit/31b94c762fc91ab6cabe08ea6812780fdcf92a64), allowing developers to create more robust applications and handle navigation errors easier with more ergonomic API🤗.
+
+## Legacy navigation handler
+
+Previously, in order to handle `NavigationError` developers had to manually `subscribe` to the router’s events, and then filter the results to capture only **navigation errors** 🤦‍♂️. On example of such implementation is often seen right in `AppComponent`:
+
+```typescript
+export class AppComponent implements OnInit {
+  // alternatively you could use contsructor injection
+  private readonly _router = inject(Router);
+
+  // Legacy approach that will be deprecated soon
+  ngOnInit() {
+    this._router.events
+      .pipe(filter((event) => event instanceof NavigationError))
+      .subscribe(() =>
+        // Handling NavigationError, e.g. redirect to error route
+        this._router.navigate(["error"], { skipLocationChange: true })
+      );
+  }
+}
+```
+
+> **You can find [full stackblitz example here](https://stackblitz.com/edit/angular-standalone-54ghpx?embed=1&file=src/main.ts). Trying to access Home route will produce NavigationError. GL HF!**
+
+This manual process had following drawbacks:
+
+- Manual process was time-consuming and prone to errors 🤔
+- Required more setup ⚙️
+- Cluttered component/module with unrelated logic 🔐
+- Required more knowledge increasing learning curve for new developers 📈
+
+## New Era
+
+**The new feature**, enabled through the `withNavigationErrorHandler` function, provides developers with more ergonomic way to tackle this problems.
+
+The idea behind it according to angular core team:
+
+> `withErrorHandler` is a close replacement for the  
+> `RouterModule.forRoot.errorHandler` / `Router.errorHandler`.  
+> It provides a quick, short way for users to define a function to handle  
+> `NavigationError` events. — [**angular source code**](https://github.com/angular/angular/pull/48551)
+
+**See below is a basic example how you can use it in your** `**standalone**` **application:**
+
+```typescript
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(
+      appRoutes,
+
+      // new API goes here!!!
+      withNavigationErrorHandler((err: NavigationError) =>
+        inject(NavErrorHandler).handle(err)
+      )
+    ),
+  ],
+});
+```
+
+The main benefit of this new feature is that it offers developers an **easier, more ergonomic and more reliable way of handling navigation errors** 🔐.
+
+As you can see, the new feature can leverage the `inject` function 💉, which is possible due to the fact that under the hood `withNavigationErrorHandler` utilizes the `EnvironmentInjector.runInContext` API 💻.
+
+**Source code with _my comments_ for** `**withNavigationErrorHandler**` **looks like this:**
+
+```typescript
+export function withNavigationErrorHandler(
+  fn: (error: NavigationError) => void
+): NavigationErrorHandlerFeature {
+  const providers = [
+    {
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => {
+        const injector = inject(EnvironmentInjector);
+
+        // takes responsibility to react to specific RouterEvent: NavigationError
+        inject(Router).events.subscribe((e) => {
+          if (e instanceof NavigationError) {
+            // enables to use inject function in withNavigationErrorHandler
+            injector.runInContext(() => fn(e));
+          }
+        });
+      },
+    },
+  ];
+  return routerFeature(
+    RouterFeatureKind.NavigationErrorHandlerFeature,
+    providers
+  );
+}
+```
+
+_From the source code above you can see that it affectively_ **_performs the same thing_** _we used to do in a past but now performing the heavylifting itself letting us to write_ **_less boilerplate code_**_, and_ **_avoid some rxjs pitfalls_** _along the way._
+
+## Conclusion
+
+<img
+  src="https://fedotievlab.vercel.app/images/posts/simplifying-navigation-error-handling-with-angulars-upcoming-feature/conclusion.webp"
+  alt="Map"
+  class="w-[680px] h-[215px]"
+/>
+
+The new feature is part of the Angular development team’s **ongoing efforts to provide developers with better tools** to create more robust and easy to design applications 📊. It provides developers with an **easier and more ergonomic way of handling navigation errors** 🚀!
