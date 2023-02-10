@@ -9,9 +9,11 @@ const getBySlug = (slug: string): BlogPost =>
   pipe(BlogPostRepository.getOne, parseBlogPost)(slug);
 
 const getAllPreviews = (): BlogPostPreviewModel[] =>
-  BlogPostRepository.getMany().map(
-    pipe(parseBlogPost, enrichWithReadingTime, normalizeBlogPostPreviewModel)
-  );
+  BlogPostRepository.getMany()
+    .map(
+      pipe(parseBlogPost, enrichWithReadingTime, normalizeBlogPostPreviewModel)
+    )
+    .sort(byDate);
 
 const getAllSlugs = (): PostSlug[] =>
   BlogPostRepository.getPostTitles().map(objOf("slug"));
@@ -41,4 +43,11 @@ function normalizeBlogPostPreviewModel({
     ...data,
     readingTime,
   };
+}
+
+function byDate(
+  { date: firstDate }: { date: string },
+  { date: secondDate }: { date: string }
+) {
+  return new Date(secondDate).getTime() - new Date(firstDate).getTime();
 }
